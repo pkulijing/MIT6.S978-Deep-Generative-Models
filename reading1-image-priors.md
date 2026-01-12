@@ -148,7 +148,7 @@ GMM-EPLL 在通用先验中达到 state-of-the-art，甚至与基于图像特定
 2. **Patch vs. Image**：说明了为什么在 patch 级别学习模型更容易，但需要巧妙的方法扩展到整图
 3. **GMM 的威力**：GMM 是 VAE 的理论基础之一，这篇论文展示了即使是简单的 GMM 也能捕捉复杂的图像统计特性
 4. **ELBO 的前身**：EPLL 框架中的优化思想与 VAE 中的 ELBO 优化有相似之处
-5. **现代方法的基础**：这种 patch-based 的思想影响了后续的 VQ-VAE、VQGAN 等 tokenizer 设计
+5. **现代方法的基础**：这种 patch-based 的思想影响了后续的 VQ-VAE/VQGAN 等 tokenizer 设计
 
 #### 核心贡献总结
 

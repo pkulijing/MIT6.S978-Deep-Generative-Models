@@ -25,14 +25,14 @@ Lecture 2 的主要内容：
 
 生成过程：
 
-1. 从**先验分布**采样潜在变量：$z \sim p(z)$
-2. 通过**生成器**（世界模型、物理模型、渲染器等）生成观测：$x \sim p(x|z)$
+1. 从**先验分布**采样潜在变量: $z \sim p(z)$
+2. 通过**生成器**（世界模型、物理模型、渲染器等）生成观测: $x \sim p(x|z)$
 3. 观测 x 具有**复杂分布**，但可以通过 z 来分解
 
 用神经网络表示：
 
 - $\theta$ - 可学习的参数
-- 生成器表示为函数：$p_\theta(x|z)$
+- 生成器表示为函数: $p_\theta(x|z)$
 - 边际分布（我们要建模的目标）：
 
 $$
@@ -123,19 +123,19 @@ $$
 - 第一项是**ELBO**（Evidence Lower Bound）
 - 第二项是$q(z)$相对于$p_\theta(z|x)$的 KL 散度
 - **可处理项**（tractable）：ELBO 中的项都可以计算或估计
-- **不可处理项**（intractable）：$p_\theta(z|x)$ 和 $\log p_\theta(x)$ 通常无法直接计算
+- **不可处理项**（intractable）: $p_\theta(z|x)$ 和 $\log p_\theta(x)$ 通常无法直接计算
 
 关键性质：
 
 - KL 散度 $\geq 0$（总是非负）
-- 因此：$\log p_\theta(x) \geq \text{ELBO}$
+- 因此: $\log p_\theta(x) \geq \text{ELBO}$
 - ELBO 是 log 似然的**下界**（Lower Bound）
-- 当 $q(z) = p_\theta(z|x)$ 时，$D_{KL}=0$，下界达到最紧
+- 当 $q(z) = p_\theta(z|x)$ 时, $D_{KL}=0$，下界达到最紧
 
 重要标注：
 
 - **可处理项**（tractable）：ELBO 中的项都可以计算或估计
-- **不可处理项**（intractable）：$p_\theta(z|x)$ 和 $\log p_\theta(x)$ 通常无法直接计算
+- **不可处理项**（intractable）: $p_\theta(z|x)$ 和 $\log p_\theta(x)$ 通常无法直接计算
 
 ### 📖 Slide 21-23: 参数化 q 和简化 ELBO
 
@@ -175,10 +175,10 @@ $$
 
 两项解释：
 
-- **重构损失**（Reconstruction Loss）：$-\mathbb{E}_q[\log p_\theta(x|z)]$
+- **重构损失**（Reconstruction Loss）: $-\mathbb{E}_q[\log p_\theta(x|z)]$
   - 确保从 z 重构 x 的质量
   - 类似于传统 autoencoder 的重构误差
-- **正则化损失**（Regularization Loss）：$D_{KL}(q_\phi(z|x) \| p(z))$
+- **正则化损失**（Regularization Loss）: $D_{KL}(q_\phi(z|x) \| p(z))$
   - 确保编码分布接近先验分布
   - 防止"作弊"（把所有信息编码到 z 中）
 
@@ -197,15 +197,15 @@ $$
 
 - 输入：数据 x
 - 输出：潜在分布的参数
-  - 均值：$\mu = f_\phi^\mu(x)$
-  - 标准差：$\sigma = f_\phi^\sigma(x)$
-- 编码分布：$q_\phi(z|x) = \mathcal{N}(\mu, \text{diag}(\sigma^2))$
+  - 均值: $\mu = f_\phi^\mu(x)$
+  - 标准差: $\sigma = f_\phi^\sigma(x)$
+- 编码分布: $q_\phi(z|x) = \mathcal{N}(\mu, \text{diag}(\sigma^2))$
 
 **Decoder（解码器）**：
 
 - 输入：采样的潜在变量 z
 - 输出：重构数据 x'的分布参数
-- 解码分布：$p_\theta(x|z)$（例如高斯或伯努利）
+- 解码分布: $p_\theta(x|z)$（例如高斯或伯努利）
 
 **重构损失的具体形式**（以高斯为例）：
 
@@ -285,8 +285,8 @@ $$
 4. 计算 $z = \mu + \sigma \odot \epsilon$
 5. Decoder 生成重构 x'
 6. 计算两部分损失：
-   - 重构损失：$\|x - x'\|^2$
-   - KL 损失：$\frac{1}{2}\sum[\mu^2 + \sigma^2 - \log(\sigma^2) - 1]$
+   - 重构损失: $\|x - x'\|^2$
+   - KL 损失: $\frac{1}{2}\sum[\mu^2 + \sigma^2 - \log(\sigma^2) - 1]$
 7. 反向传播更新 $\phi$ 和 $\theta$
 
 ### 📖 Slide 31-35: VAE 的推理（生成）
@@ -295,8 +295,8 @@ $$
 
 **生成过程**：
 
-1. 从先验采样：$z \sim p(z) = \mathcal{N}(0, I)$
-2. 通过 decoder 映射：$x = g_\theta(z)$
+1. 从先验采样: $z \sim p(z) = \mathcal{N}(0, I)$
+2. 通过 decoder 映射: $x = g_\theta(z)$
 3. 得到生成的样本 x
 
 **注意**：
@@ -364,9 +364,9 @@ $$
 
 **问题设定**：
 
-- 观测数据：$x$
-- 隐变量：$z$
-- 参数：$\theta$
+- 观测数据: $x$
+- 隐变量: $z$
+- 参数: $\theta$
 - 目标：最大化边际似然 $p_\theta(x) = \int p_\theta(x,z) dz$
 
 **EM 算法的适用前提**：
@@ -421,7 +421,7 @@ $$
 **Q 函数的含义**：
 
 - Q 函数是**完全数据对数似然** $\log p_\theta(x, z)$ 关于**隐变量后验分布** $q(z) = p_{\theta^{(t)}}(z|x)$ 的**期望**
-- 换句话说：因为我们不知道真实的 $z$，所以对所有可能的 $z$ 值取加权平均，权重就是在当前参数 $\theta^{(t)}$ 下，$z$ 的后验概率$q(z) = p_{\theta^{(t)}}(z|x)$
+- 换句话说：因为我们不知道真实的 $z$，所以对所有可能的 $z$ 值取加权平均，权重就是在当前参数 $\theta^{(t)}$ 下, $z$ 的后验概率$q(z) = p_{\theta^{(t)}}(z|x)$
 
 **为什么需要 Q 函数？**
 
@@ -578,7 +578,7 @@ $$
 假设我们有数据点 $x_i$，想用 K 个高斯分布拟合：
 
 - **隐变量** $z_i \in \{1, 2, ..., K\}$：数据点 $x_i$ 来自哪个高斯分量
-- **完全数据对数似然**：$\log p_\theta(x_i, z_i) = \log p(z_i) + \log \mathcal{N}(x_i | \mu_{z_i}, \Sigma_{z_i})$
+- **完全数据对数似然**: $\log p_\theta(x_i, z_i) = \log p(z_i) + \log \mathcal{N}(x_i | \mu_{z_i}, \Sigma_{z_i})$
 - **Q 函数**：
 
 $$
@@ -659,7 +659,7 @@ $$
 
 **K-means 的概率解释**：
 
-- **隐变量**：$z \in \{1, 2, ..., K\}$（数据点属于哪个簇）
+- **隐变量**: $z \in \{1, 2, ..., K\}$（数据点属于哪个簇）
 - **模型**：
 
 $$
@@ -744,7 +744,7 @@ $$
 
 **标准 VAE 的潜在变量**：
 
-- **连续**的高斯分布：$q_\phi(z|x) = \mathcal{N}(\mu, \sigma^2)$
+- **连续**的高斯分布: $q_\phi(z|x) = \mathcal{N}(\mu, \sigma^2)$
 - 通过重参数化技巧采样
 - 适合建模连续的变化（如图像的平滑变换）
 
@@ -777,7 +777,7 @@ K-means 可以看作一个特殊的自编码器：
 
 - **编码器**：将数据点 $x$ 映射到最近的簇中心（one-hot 向量）
 - **解码器**：将 one-hot 向量映射回簇中心。这里的“解码”是非常简单的操作，属于簇中心$\mu_i$的点解码后的结果就是$\mu_i$，其与$\mu_i$的区别就丢失了
-- **码本**：$K$ 个簇中心 $\{\mu_1, \mu_2, ..., \mu_K\}$
+- **码本**: $K$ 个簇中心 $\{\mu_1, \mu_2, ..., \mu_K\}$
 - **损失函数**：重构损失 $\|x - \mu_{k^*}\|^2$，其中 $k^* = \arg\min_k \|x - \mu_k\|^2$
 
 **K-means 的优点**：
@@ -802,7 +802,7 @@ $$
 
 1. **如果某个簇没有数据点**（$N_k=0$）：
 
-   - 传统 K-means：${\mu_k}$ 的更新变为 $\frac{0}{0}$（未定义）
+   - 传统 K-means: ${\mu_k}$ 的更新变为 $\frac{0}{0}$（未定义）
    - 实践中的处理：
      - **重新初始化**：随机选择一个新的中心位置
      - **或者删除该簇**：减少 K 的值
@@ -837,7 +837,7 @@ $$
 2. **VQ Encoder（向量量化编码器）**：
 
    - 输入：连续向量 $z_e$
-   - 码本：$\mathcal{C} = \{e_0, e_1, ..., e_{K-1}\}$（$K$ 个可学习的向量）
+   - 码本: $\mathcal{C} = \{e_0, e_1, ..., e_{K-1}\}$（$K$ 个可学习的向量）
    - 操作：找到最近的码本向量
 
    $$
@@ -928,7 +928,7 @@ z = (z_hard - z_soft).detach() + z_soft
 - **反向传播**：
   - `(z_hard - z_soft).detach()` 被当作**常数**，梯度为 0
   - 梯度只通过 `z_soft` 流动
-  - 结果：$\frac{\partial z}{\partial \text{logits}} = \frac{\partial z_{\text{soft}}}{\partial \text{logits}}$（softmax 的梯度）
+  - 结果: $\frac{\partial z}{\partial \text{logits}} = \frac{\partial z_{\text{soft}}}{\partial \text{logits}}$（softmax 的梯度）
 
 **等价写法**：
 
@@ -1033,7 +1033,7 @@ VQ-VAE 通常输出**多个** one-hot 向量：
 - **使用卷积网络或 Transformer**：
   - Encoder：将 $x \in \mathbb{R}^{H \times W \times C}$ 映射到 $z_e \in \mathbb{R}^{h \times w \times d}$（通常 $h < H, w < W$）
   - 对每个空间位置 $(i,j)$ 独立地进行向量量化
-  - 得到离散码的网格：$z \in \{0,1,...,K-1\}^{h \times w}$
+  - 得到离散码的网格: $z \in \{0,1,...,K-1\}^{h \times w}$
   - Decoder：将量化后的嵌入网格映射回图像
 
 **示例**：
@@ -1068,8 +1068,8 @@ VQ-VAE 通常输出**多个** one-hot 向量：
 
 **先验分布 $p(z)$ 的假设**：
 
-- 在标准 VAE 中：$p(z) = \mathcal{N}(0, I)$（标准高斯）
-- 在 VQ-VAE 中：$p(z)$ 是均匀分布（每个码本向量等概率）
+- 在标准 VAE 中: $p(z) = \mathcal{N}(0, I)$（标准高斯）
+- 在 VQ-VAE 中: $p(z)$ 是均匀分布（每个码本向量等概率）
 
 这些先验都假设：
 
