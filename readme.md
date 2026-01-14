@@ -11,3 +11,7 @@ MIT 深度生成模型课程学习笔记，基于 genspark 生成的初版，通
 
 - [Reading 1: Image Priors](reading1-image-priors.md)
 - [Reading 1.1: VAE Paper](reading1.1-vae-paper.md)
+
+## Assignments
+
+- [Assignment 1: VAE](pset1.ipynb)
