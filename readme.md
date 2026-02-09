@@ -6,6 +6,7 @@ MIT 深度生成模型课程学习笔记，基于 genspark 生成的初版，通
 
 - [Lecture 1: Introduction](lecture1-introduction.md)
 - [Lecture 2: Variational Autoencoders (VAEs)](lecture2-vae.md)
+- [Lecture 3: AutoRegressive Models](lecture3-auto-regressive.md)
 
 ## Readings
 
