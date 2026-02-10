@@ -542,7 +542,7 @@ $$
 - 例子：$\mathbb{R}^d$ 配备欧几里得范数是完备的
 
 **压缩映射**（收缩映射）：
-映射 $T: X \to X$ 满足存在 $ 0 \leq L < 1$ 使得：
+映射 $T: X \to X$ 满足存在 $0 \leq L < 1$ 使得：
 
 $$
 d(T(x), T(y)) \leq L \cdot d(x, y), \quad \forall x, y \in X
@@ -571,7 +571,7 @@ $$
 
 **定理（Banach不动点定理）**：
 
-设 $(X, d)$ 是完备度量空间，$T: X \to X$ 是压缩映射，即存在 $ 0 \leq L < 1$ 使得：
+设 $(X, d)$ 是完备度量空间，$T: X \to X$ 是压缩映射，即存在 $0 \leq L < 1$ 使得：
 
 $$
 d(T(x), T(y)) \leq L \cdot d(x, y), \quad \forall x, y \in X
