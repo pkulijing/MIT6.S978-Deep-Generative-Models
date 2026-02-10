@@ -188,7 +188,7 @@ $$
 
 $$
 \begin{array}{ccccccc}
-x & \xrightarrow{\text{Encoder } \phi} & (\mu, \sigma) & \xrightarrow{\text{采样}} & z & \xrightarrow{\text{Decoder } \theta} & x' \\
+x & \xrightarrow{\mathrm{Encoder} \phi} & (\mu, \sigma) & \xrightarrow{\mathrm{采样}} & z & \xrightarrow{\mathrm{Decoder } \theta} & x' \\
 \end{array}
 $$
 
