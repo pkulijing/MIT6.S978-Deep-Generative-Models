@@ -186,7 +186,7 @@ $$
 假设 $A $, $B $, $C $每个都有10种可能的取值，我们可以用一个直观的例子展示自回归如何简化问题：
 
 $$
-\underbrace{p(A, B, C)}_{\text{1000维输出}} = \underbrace{p(A)}_{\text{10维}} \times \underbrace{p(B \mid A)}_{\text{10维}} \times \underbrace{p(C \mid A,B)}_{\text{10维}}
+\underbrace{p(A, B, C)}_{\mathrm{1000维输出}} = \underbrace{p(A)}_{\mathrm{10维}} \times \underbrace{p(B \mid A)}_{\mathrm{10维}} \times \underbrace{p(C \mid A,B)}_{\mathrm{10维}}
 $$
 
 - **直接建模联合分布**： $p(A, B, C) $需要输出 $10 \times 10 \times 10 = 1000 $个概率值（覆盖所有可能的组合）
@@ -273,7 +273,7 @@ $$
 
 **关键性质**：
 
-- **$ x $可以是任何表示**：不一定是顺序或时间的
+- **x可以是任何表示**：不一定是顺序或时间的
   - 向量的所有维度
   - 2D、3D或高维数组
   - 标记、像素、特征等
@@ -413,10 +413,10 @@ Next Token Preidiction 暗示时间结构：
 
 **推理过程**：
 
-- **$ p(x_1) $**：采样第一个像素（左上角）
-- **$ p(x_2 \mid x_1) $**：给定第一个像素采样第二个像素
-- **$ p(x_3 \mid x_1, x_2) $**：给定前两个像素采样第三个像素
-- **$ p(x_n \mid x_1, \ldots, x_{n-1}) $**：给定所有前面像素采样第n个像素
+- **$p(x_1) $**：采样第一个像素（左上角）
+- **$p(x_2 \mid x_1) $**：给定第一个像素采样第二个像素
+- **$p(x_3 \mid x_1, x_2) $**：给定前两个像素采样第三个像素
+- **$p(x_n \mid x_1, \ldots, x_{n-1}) $**：给定所有前面像素采样第n个像素
 
 **网络架构（对于步骤 $n $）**：
 
@@ -518,8 +518,8 @@ $$
 
 **数学公式**：
 
-- **隐藏状态更新**： $h_t = \text{RNN}(x_t, h_{t-1}) $
-- **输出分布**： $p(x_{t+1} \mid x_1, \ldots, x_t) = \text{softmax}(W_o h_t + b_o) $
+- **隐藏状态更新**： $h_t = \mathrm{RNN}(x_t, h_{t-1}) $
+- **输出分布**： $p(x_{t+1} \mid x_1, \ldots, x_t) = \mathrm{softmax}(W_o h_t + b_o) $
 - **信息流**：隐藏状态 $h_t $携带来自所有前面输入的信息
 
 **训练过程**：
@@ -532,10 +532,10 @@ $$
 
 **条件映射**：
 
-- $p(x_2 \mid x_1) $：使用 $h_1 = \text{RNN}(x_1, h_0) $
-- $p(x_3 \mid x_1, x_2) $：使用 $h_2 = \text{RNN}(x_2, h_1) $
-- $p(x_4 \mid x_1, x_2, x_3) $：使用 $h_3 = \text{RNN}(x_3, h_2) $
-- $p(x_5 \mid x_1, x_2, x_3, x_4) $：使用 $h_4 = \text{RNN}(x_4, h_3) $
+- $p(x_2 \mid x_1) $：使用 $h_1 = \mathrm{RNN}(x_1, h_0) $
+- $p(x_3 \mid x_1, x_2) $：使用 $h_2 = \mathrm{RNN}(x_2, h_1) $
+- $p(x_4 \mid x_1, x_2, x_3) $：使用 $h_3 = \mathrm{RNN}(x_3, h_2) $
+- $p(x_5 \mid x_1, x_2, x_3, x_4) $：使用 $h_4 = \mathrm{RNN}(x_4, h_3) $
 
 **示例：Char-RNN**
 
@@ -569,7 +569,7 @@ $$
 
 **训练过程**：
 
-1. **输入**：填充序列 $[\text{PAD}, x_1, x_2, \ldots, x_{n-1}] $
+1. **输入**：填充序列 $[\mathrm{PAD}, x_1, x_2, \ldots, x_{n-1}] $
 2. **因果卷积**：确保 $y_i $只使用 $j < i $的 $x_j $
 3. **输出**：分布 $[p(x_1), p(x_2 \mid x_1), \ldots, p(x_n \mid x_1, \ldots, x_{n-1})] $
 
@@ -598,11 +598,11 @@ $$
 
 **因果注意力机制**：
 
-1. **查询、键、值**： $Q = XW_Q $， $K = XW_K $， $V = XW_V $
-2. **注意力分数**： $A_{i,j} = \frac{Q_i \cdot K_j}{\sqrt{d_k}} $
-3. **因果掩码**：对 $j > i $设置 $A_{i,j} = -\infty $
-4. **Softmax**： $\text{Attn}_{i,j} = \text{softmax}(A_{i,:}) $
-5. **输出**： $O_i = \sum_{j \leq i} \text{Attn}_{i,j} V_j $
+1. **查询、键、值**: $Q = XW_Q $， $K = XW_K $， $V = XW_V$
+2. **注意力分数**: $A_{i,j} = \frac{Q_i \cdot K_j}{\sqrt{d_k}}$
+3. **因果掩码**: 对 $j > i $设置 $A_{i,j} = -\infty$
+4. **Softmax**: $\mathrm{Attn}\_{i,j} = \frac{\exp(A\_{i,j})}{\sum_{k \leq i} \exp(A_{i,k})}$
+5. **输出**: $O_i = \sum_{j \leq i} \mathrm{Attn}_{i,j} V_j$
 
 **掩码模式**：
 
@@ -620,7 +620,7 @@ $$
 
 **性质**：
 
-- **$ O(n^2) $复杂度**：序列长度的二次方
+- **$O(n^2)$复杂度**：序列长度的二次方
 - **直接连接**：每个位置可以直接关注所有前面位置
 - **最强大**：最适合捕获长程依赖
 - **并行训练**：所有位置同时计算
