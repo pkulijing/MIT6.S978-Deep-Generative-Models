@@ -155,30 +155,30 @@ $$
 \frac{dx}{dt} = f(x, t)
 $$
 
-在合适的条件下（比如$f$是Lipschitz连续的），这个ODE有**唯一解**，即从任何初始条件$x(0)$出发，都有唯一的轨迹$x(t)$。
+在合适的条件下（比如 $f$是Lipschitz连续的），这个ODE有**唯一解**，即从任何初始条件 $x(0)$出发，都有唯一的轨迹 $x(t)$。
 
 **从连续到离散**：
 
 ResNet的每一层可以看作是这个ODE的一个**离散时间步**：
 
 $$
-x_{t+1} = x_t + g_t(x_t) \quad \text{（ResNet层）}
+x_{t+1} = x_t + g_t(x_t) \quad \mathrm{（ResNet层）}
 $$
 
 这就像欧拉法求解ODE：
 
 $$
-x_{t+1} = x_t + h \cdot f(x_t, t) \quad \text{（欧拉法）}
+x_{t+1} = x_t + h \cdot f(x_t, t) \quad \mathrm{（欧拉法）}
 $$
 
 **可逆性的理论保证**：
 
-如果$g_t$满足某些条件（具体来说，如果$\text{Lip}(g_t) < 1$），那么变换$x_{t+1} = x_t + g_t(x_t)$就是**可逆的**！
+如果 $g_t$满足某些条件（具体来说，如果 $\mathrm{Lip}(g_t) < 1$），那么变换 $x_{t+1} = x_t + g_t(x_t)$就是**可逆的**！
 
 **为什么这个洞察如此重要？**
 
 1. **理论保证**：不是"碰运气"地设计可逆变换，而是有严格的数学理论支撑
-2. **通用性**：$g_t$可以是任意神经网络，只要满足Lipschitz约束
+2. **通用性**: $g_t$可以是任意神经网络，只要满足Lipschitz约束
 3. **自然性**：不需要人工设计复杂的耦合结构，ResNet本身就是"天然可逆的"
 
 #### 💪 i-ResNet相比Glow的核心优势
@@ -322,21 +322,21 @@ graph TD
 Lipschitz常数的定义：
 
 $$
-\text{Lip}(g) = \sup_{x \neq y} \frac{\|g(x) - g(y)\|}{\|x - y\|}
+\mathrm{Lip}(g) = \sup_{x \neq y} \frac{\|g(x) - g(y)\|}{\|x - y\|}
 $$
 
 $\sup$ 的含义：
 
 - 上确界 (supremum) 是"最小的上界"
-- 如果 $\sup S \in S$，则 $\max S = \sup S$；否则只有 $\sup$ 存在，$\max$ 不存在
-- 举例：$S = \{1 - \frac{1}{n} : n = 1, 2, 3, \ldots\}$，$\sup S = 1$，但 $\max S$ 不存在（$ 1 \notin S$）
+- 如果 $\sup S \in S$，则 $\max S = \sup S$；否则只有 $\sup$ 存在, $\max$ 不存在
+- 举例: $S = \{1 - \frac{1}{n} : n = 1, 2, 3, \ldots\}$, $\sup S = 1$，但 $\max S$ 不存在($1\notin S$)
 
 ##### 2.1.2 复合函数的Lipschitz常数
 
-**定理**：如果 $\text{Lip}(f) = L_f$，$\text{Lip}(g) = L_g$，则：
+**定理**：如果 $\mathrm{Lip}(f) = L_f$, $\mathrm{Lip}(g) = L_g$，则：
 
 $$
-\text{Lip}(f \circ g) \leq L_f \cdot L_g
+\mathrm{Lip}(f \circ g) \leq L_f \cdot L_g
 $$
 
 **证明**：
@@ -353,13 +353,13 @@ $$
 
 两边除以 $\|x_1 - x_2\|$ 并取上确界得证。□
 
-**直观理解**：$g$ 最多把距离放大 $L_g$ 倍，$f$ 再最多放大 $L_f$ 倍，总共最多 $L_f \cdot L_g$ 倍。
+**直观理解**: $g$ 最多把距离放大 $L_g$ 倍, $f$ 再最多放大 $L_f$ 倍，总共最多 $L_f \cdot L_g$ 倍。
 
 ##### 2.1.3 可微函数的快速计算方法
 
 **拉格朗日中值定理的应用**：
 
-对于可微函数 $g: D \to \mathbb{R}$（$D$ 是凸集），存在 $\xi \in (x_1, x_2)$ 使得：
+对于可微函数 $g: D \to \mathbb{R}$($D$ 是凸集)，存在 $\xi \in (x_1, x_2)$ 使得：
 
 $$
 \frac{g(x_1) - g(x_2)}{x_1 - x_2} = g'(\xi)
@@ -374,32 +374,32 @@ $$
 **关键结论**：可微函数的Lipschitz常数 = 导数绝对值的上确界
 
 $$
-\boxed{\text{Lip}(g) = \sup_{x \in D} |g'(x)|}
+\boxed{\mathrm{Lip}(g) = \sup_{x \in D} |g'(x)|}
 $$
 
 **常见可微函数的Lipschitz常数表**：
 
-| 函数类型            | $g(x)$              | $g'(x)$                | 定义域$D$      | $\text{Lip}(g)$ | 收缩？       | 备注                       |
+| 函数类型            | $g(x)$              | $g'(x)$                | 定义域 $D$      | $\mathrm{Lip}(g)$ | 收缩？       | 备注                       |
 | ------------------- | --------------------- | ------------------------ | ---------------- | ----------------- | ------------ | -------------------------- |
 | **多项式**    |                       |                          |                  |                   |              |                            |
-|                     | $x^2$               | $2x$                     | $[-R, R]$      | $2R$              | 若$R<0.5$  | 全局：$\infty$           |
-|                     | $x^3$               | $3x^2$                   | $[-R, R]$      | $3R^2$            | 若$R<0.58$ | 全局：$\infty$           |
+|                     | $x^2$               | $2x$                     | $[-R, R]$      | $2R$              | 若 $R<0.5$  | 全局: $\infty$           |
+|                     | $x^3$               | $3x^2$                   | $[-R, R]$      | $3R^2$            | 若 $R<0.58$ | 全局: $\infty$           |
 |                     | $\frac{x^2}{1+x^2}$ | $\frac{2x}{(1+x^2)^2}$ | $\mathbb{R}$   | $0.5$             | ✅           | 全局收缩                   |
 | **三角函数**  |                       |                          |                  |                   |              |                            |
 |                     | $\sin(x)$           | $\cos(x)$              | $\mathbb{R}$   | $1$               | 边界         |                            |
-|                     | $a\sin(x)$          | $a\cos(x)$             | $\mathbb{R}$   | $                 | a            | $                          |
-|                     | $\arctan(x)$        | $\frac{1}{1+x^2}$      | $\mathbb{R}$   | $1$               | 边界         | 在$x=0$ 取到             |
+|                     | $\arcsin(x)$          | $\arccos(x)$             | $\mathbb{R}$   | $\|a\|$                 | 若 $\|a\|\lt 1$             |                           |
+|                     | $\arctan(x)$        | $\frac{1}{1+x^2}$      | $\mathbb{R}$   | $1$               | 边界         | 在 $x=0$ 取到             |
 | **指数/对数** |                       |                          |                  |                   |              |                            |
-|                     | $e^x$               | $e^x$                  | $(-\infty, R]$ | $e^R$           | 若$R<0$    | $[0,\infty)$：$\infty$ |
-|                     | $e^{-x}$            | $-e^{-x}$              | $[R, \infty)$  | $e^{-R}$        | 若$R>0$    |                            |
-|                     | $\ln(x)$            | $\frac{1}{x}$          | $[a, \infty)$  | $\frac{1}{a}$   | 若$a>1$    | 接近0时：$\infty$        |
+|                     | $e^x$               | $e^x$                  | $(-\infty, R]$ | $e^R$           | 若 $R<0$    | $[0,\infty)$: $\infty$ |
+|                     | $e^{-x}$            | $-e^{-x}$              | $[R, \infty)$  | $e^{-R}$        | 若 $R>0$    |                            |
+|                     | $\ln(x)$            | $\frac{1}{x}$          | $[a, \infty)$  | $\frac{1}{a}$   | 若 $a>1$    | 接近0时: $\infty$        |
 
 ##### 2.1.4 神经网络激活函数的Lipschitz常数
 
 **ReLU**：
 
 $$
-g(x) = \max(0, x), \quad \text{Lip}(g) = 1
+g(x) = \max(0, x), \quad \mathrm{Lip}(g) = 1
 $$
 
 **Sigmoid**：
@@ -408,10 +408,10 @@ $$
 g(x) = \frac{1}{1 + e^{-x}}, \quad g'(x) = \sigma(x)(1 - \sigma(x))
 $$
 
-最大值在 $x = 0$：$g'(0) = \frac{1}{4}$
+最大值在 $x = 0$: $g'(0) = \frac{1}{4}$
 
 $$
-\text{Lip}(\sigma) = 0.25 < 1 \quad \text{✅ 全局收缩映射}
+\mathrm{Lip}(\sigma) = 0.25 < 1 \quad \mathrm{✅ 全局收缩映射}
 $$
 
 **Tanh**：
@@ -421,7 +421,7 @@ g(x) = \tanh(x), \quad g'(x) = 1 - \tanh^2(x)
 $$
 
 $$
-\text{Lip}(\tanh) = 1 \quad \text{（边界情况）}
+\mathrm{Lip}(\tanh) = 1 \quad \mathrm{（边界情况）}
 $$
 
 **Softplus**：
@@ -431,14 +431,14 @@ g(x) = \ln(1 + e^x), \quad g'(x) = \sigma(x)
 $$
 
 $$
-\text{Lip}(g) = 1 \quad \text{（边界情况）}
+\mathrm{Lip}(g) = 1 \quad \mathrm{（边界情况）}
 $$
 
 #### 2.2 矩阵的Lipschitz常数
 
 ##### 2.2.1 奇异值的定义
 
-对于矩阵 $A \in \mathbb{R}^{m \times n}$，**奇异值分解（SVD）**为：
+对于矩阵 $A \in \mathbb{R}^{m \times n}$, 奇异值分解(SVD)为：
 
 $$
 A = U\Sigma V^T
@@ -451,7 +451,7 @@ $$
 | 概念   | 定义                       | 适用矩阵 | 数量                 |
 | ------ | -------------------------- | -------- | -------------------- |
 | 特征值 | $Av = \lambda v$         | 方阵     | $n$ 个（可能复数） |
-| 奇异值 | SVD中$\Sigma$ 的对角元素 | 任意矩阵 | $\min(m,n)$ 个     |
+| 奇异值 | SVD中 $\Sigma$ 的对角元素 | 任意矩阵 | $\min(m,n)$ 个     |
 
 **数学关系**：
 
@@ -459,7 +459,7 @@ $$
 \sigma_i = \sqrt{\lambda_i(A^T A)}
 $$
 
-**何时相等？** 只有当 $A$ 是对称矩阵时，$\sigma_i = |\lambda_i|$
+**何时相等？** 只有当 $A$ 是对称矩阵时, $\sigma_i = |\lambda_i|$
 
 ##### 2.2.2 多维线性函数的Lipschitz常数
 
@@ -478,7 +478,7 @@ $$
 因此：
 
 $$
-\boxed{\text{Lip}(g) = \|A\|_2 = \sigma_{\max}(A)}
+\boxed{\mathrm{Lip}(g) = \|A\|_2 = \sigma_{\max}(A)}
 $$
 
 **重要**：这里是**最大奇异值**，不是最大特征值！
@@ -488,31 +488,37 @@ $$
 **例1：对称矩阵**（奇异值 = 特征值绝对值）
 
 $$
-A = \begin{bmatrix} 4 & 1 \\ 1 & 3 \end{bmatrix}
+\begin{aligned}
+A = \begin{bmatrix} 4 & 1 \\\\ 1 & 3 \end{bmatrix}
+\end{aligned}
 $$
 
-- 特征值：$\lambda_1 \approx 4.618$，$\lambda_2 \approx 2.382$
-- 奇异值：$\sigma_1 \approx 4.618$，$\sigma_2 \approx 2.382$
-- $\|A\|_2 = \sigma_{\max} = |\lambda_{\max}| \approx 4.618$ ✅
+- 特征值: $\lambda_1 \approx 4.618$, $\lambda_2 \approx 2.382$
+- 奇异值: $\sigma_1 \approx 4.618$, $\sigma_2 \approx 2.382$
+-  $\|A\|\_2 = \sigma\_{\max} = |\lambda\_{\max}| \approx 4.618$ ✅
 
 **例2：非对称矩阵**（奇异值 ≠ 特征值）
 
 $$
-A = \begin{bmatrix} 0.5 & 0.2 \\ 0.1 & 0.6 \end{bmatrix}
+\begin{aligned}
+A = \begin{bmatrix} 0.5 & 0.2 \\\\ 0.1 & 0.6 \end{bmatrix}
+\end{aligned}
 $$
 
-- 特征值：$\lambda_1 \approx 0.724$，$\lambda_2 \approx 0.376$
-- 最大奇异值：$\sigma_{\max} \approx 0.717$
-- $\|A\|_2 = 0.717 \neq \lambda_{\max}$ ❌
+- 特征值: $\lambda_1 \approx 0.724$, $\lambda_2 \approx 0.376$
+- 最大奇异值: $\sigma_{\max} \approx 0.717$
+-  $\|A\|\_2 = 0.717 \neq \lambda\_{\max}$ ❌
 
 **例3：旋转矩阵**（特征值是复数）
 
 $$
-R = \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix}
+\begin{aligned}
+R = \begin{bmatrix} \cos\theta & -\sin\theta \\\\ \sin\theta & \cos\theta \end{bmatrix}
+\end{aligned}
 $$
 
-- 特征值：$\lambda = e^{\pm i\theta}$（复数，模为1）
-- 奇异值：$\sigma_1 = \sigma_2 = 1$
+- 特征值: $\lambda = e^{\pm i\theta}$（复数，模为1）
+- 奇异值: $\sigma_1 = \sigma_2 = 1$
 - $\|R\|_2 = 1$
 
 **为什么Lipschitz常数用奇异值而不是特征值？**
@@ -539,7 +545,7 @@ $$
   - $d(x, y) = d(y, x)$
   - $d(x, z) \leq d(x, y) + d(y, z)$
 - 完备性：任何柯西序列都收敛（极限在空间内）
-- 例子：$\mathbb{R}^d$ 配备欧几里得范数是完备的
+- 例子: $\mathbb{R}^d$ 配备欧几里得范数是完备的
 
 **压缩映射**（收缩映射）：
 映射 $T: X \to X$ 满足存在 $0 \leq L < 1$ 使得：
@@ -548,10 +554,10 @@ $$
 d(T(x), T(y)) \leq L \cdot d(x, y), \quad \forall x, y \in X
 $$
 
-几何直观：$T$ 把任意两点"拉近"至少 $(1-L)$ 的比例。
+几何直观: $T$ 把任意两点"拉近"至少 $(1-L)$ 的比例。
 
 **柯西序列**：
-序列 $\{x_n\}$ 满足：对任意 $\epsilon > 0$，存在 $N$ 使得当 $m, n > N$ 时，$d(x_m, x_n) < \epsilon$。
+序列 $\{x_n\}$ 满足：对任意 $\epsilon > 0$，存在 $N$ 使得当 $m, n > N$ 时, $d(x_m, x_n) < \epsilon$。
 
 直观含义：序列中的点越来越"挤在一起"，后面的项彼此距离可以任意小。
 
@@ -562,7 +568,7 @@ $$
 
 **反例**：在空间 $(0, 1)$（开区间，不含端点）中：
 
-- 序列 $\left\{\frac{1}{n}\right\}$ 是柯西序列（点彼此越来越近）
+- 序列 $\left\lbrace\frac{1}{n}\right\rbrace$ 是柯西序列（点彼此越来越近）
 - 但极限 $\lim_{n\to\infty} \frac{1}{n} = 0 \notin (0, 1)$（"逃出"了空间）
 
 **这就是为什么Banach定理要求"完备度量空间"**：保证柯西序列一定收敛！
@@ -571,7 +577,7 @@ $$
 
 **定理（Banach不动点定理）**：
 
-设 $(X, d)$ 是完备度量空间，$T: X \to X$ 是压缩映射，即存在 $0 \leq L < 1$ 使得：
+设 $(X, d)$ 是完备度量空间, $T: X \to X$ 是压缩映射，即存在 $0 \leq L < 1$ 使得：
 
 $$
 d(T(x), T(y)) \leq L \cdot d(x, y), \quad \forall x, y \in X
@@ -579,22 +585,22 @@ $$
 
 则：
 
-1. **存在性与唯一性**：$T$ 有唯一的不动点 $x^* \in X$，即 $T(x^*) = x^*$
-2. **构造性**：从任意初始点 $x_0 \in X$ 出发，迭代 $x_{n+1} = T(x_n)$ 收敛到 $x^*$
+1. **存在性与唯一性**: $T$ 有唯一的不动点 $x^{\ast} \in X$，即 $T(x^{\ast}) = x^{\ast}$
+2. **构造性**：从任意初始点 $x_0 \in X$ 出发，迭代 $x_{n+1} = T(x_n)$ 收敛到 $x^{\ast}$
 3. **收敛速率**：误差以几何级数衰减
 4. **先验误差估计**（a priori，事前）：开始迭代前就能预测误差
 
-   $$
-   d(x_n, x^*) \leq \frac{L^n}{1-L} d(x_1, x_0)
-   $$
+$$
+d(x_n, x^{\ast}) \leq \frac{L^n}{1-L} d(x_1, x_0)
+$$
 
    - 依赖：初始误差和迭代次数
    - 用途：决定需要迭代多少次
 5. **后验误差估计**（a posteriori，事后）：迭代过程中实时估计
 
-   $$
-   d(x_n, x^*) \leq \frac{L}{1-L} d(x_n, x_{n-1})
-   $$
+$$
+d(x_n, x^{\ast}) \leq \frac{L}{1-L} d(x_n, x_{n-1})
+$$
 
    - 依赖：最近两步的差
    - 用途：动态判断是否已收敛
@@ -603,13 +609,13 @@ $$
 
 **第一步：证明唯一性**
 
-假设有两个不动点 $x^*, \tilde{x}^*$：
+假设有两个不动点 $x^{\ast}, \tilde{x}^{\ast}$：
 
 $$
-d(x^*, \tilde{x}^*) = d(T(x^*), T(\tilde{x}^*)) \leq L \cdot d(x^*, \tilde{x}^*) < d(x^*, \tilde{x}^*)
+d(x^{\ast}, \tilde{x}^{\ast}) = d(T(x^{\ast}), T(\tilde{x}^{\ast})) \leq L \cdot d(x^{\ast}, \tilde{x}^{\ast}) \lt d(x^{\ast}, \tilde{x}^{\ast})
 $$
 
-矛盾，除非 $d(x^*, \tilde{x}^*) = 0$，即 $x^* = \tilde{x}^*$。□
+矛盾，除非 $d(x^{\ast}, \tilde{x}^{\ast}) = 0$，即 $x^{\ast} = \tilde{x}^{\ast}$。□
 
 **第二步：构造序列**
 
@@ -637,24 +643,24 @@ d(x_m, x_n) &\leq \sum_{k=n}^{m-1} d(x_{k+1}, x_k) \\
 \end{aligned}
 $$
 
-当 $n \to \infty$ 时，$L^n \to 0$，所以 $\{x_n\}$ 是柯西序列。□
+当 $n \to \infty$ 时, $L^n \to 0$，所以 $\{x_n\}$ 是柯西序列。□
 
 **第四步：极限是不动点**
 
-由完备性，$\{x_n\}$ 收敛到 $x^* \in X$。由 $T$ 的连续性：
+由完备性, $\{x_n\}$ 收敛到 $x^{\ast} \in X$。由 $T$ 的连续性：
 
 $$
-x^* = \lim_{n \to \infty} x_{n+1} = \lim_{n \to \infty} T(x_n) = T(x^*)
+x^{\ast} = \lim_{n \to \infty} x_{n+1} = \lim_{n \to \infty} T(x_n) = T(x^{\ast})
 $$
 
-所以 $x^*$ 是不动点。□
+所以 $x^{\ast}$ 是不动点。□
 
 **第五步：收敛速率**
 
 从第三步，令 $m \to \infty$：
 
 $$
-d(x_n, x^*) \leq \frac{L^n}{1-L} d(x_1, x_0) \quad \text{（先验估计）}
+d(x_n, x^{\ast}) \leq \frac{L^n}{1-L} d(x_1, x_0) \quad \mathrm{（先验估计）}
 $$
 
 **后验估计的推导**：
@@ -663,9 +669,9 @@ $$
 
 $$
 \begin{aligned}
-d(x_n, x^*) &\leq d(x_n, x_{n+1}) + d(x_{n+1}, x^*) \\
-&= d(x_n, T(x_n)) + d(T(x_n), T(x^*)) \quad (\because x_{n+1} = T(x_n), x^* = T(x^*)) \\
-&\leq d(x_n, x_{n+1}) + L \cdot d(x_n, x^*) \quad (\text{压缩性质})
+d(x_n, x^{\ast}) &\leq d(x_n, x_{n+1}) + d(x_{n+1}, x^{\ast}) \\
+&= d(x_n, T(x_n)) + d(T(x_n), T(x^{\ast})) \quad (\because x_{n+1} = T(x_n), x^{\ast} = T(x^{\ast})) \\
+&\leq d(x_n, x_{n+1}) + L \cdot d(x_n, x^{\ast}) \quad (\mathrm{压缩性质})
 \end{aligned}
 $$
 
@@ -673,16 +679,16 @@ $$
 
 $$
 \begin{aligned}
-d(x_n, x^*) - L \cdot d(x_n, x^*) &\leq d(x_n, x_{n+1}) \\
-(1 - L) \cdot d(x_n, x^*) &\leq d(x_n, x_{n+1}) \\
-d(x_n, x^*) &\leq \frac{1}{1-L} d(x_n, x_{n+1})
+d(x_n, x^{\ast}) - L \cdot d(x_n, x^{\ast}) &\leq d(x_n, x_{n+1}) \\
+(1 - L) \cdot d(x_n, x^{\ast}) &\leq d(x_n, x_{n+1}) \\
+d(x_n, x^{\ast}) &\leq \frac{1}{1-L} d(x_n, x_{n+1})
 \end{aligned}
 $$
 
 因此：
 
 $$
-\boxed{d(x_n, x^*) \leq \frac{L}{1-L} d(x_n, x_{n-1})} \quad \text{（后验估计）}
+\boxed{d(x_n, x^{\ast}) \leq \frac{L}{1-L} d(x_n, x_{n-1})} \quad \mathrm{（后验估计）}
 $$
 
 （注意：最终形式用的是 $d(x_n, x_{n-1})$ 而不是 $d(x_n, x_{n+1})$，因为我们通常在已知前一步的情况下估计当前误差）
@@ -697,7 +703,7 @@ $$
 x_{t+1} = x_t + g_{\theta_t}(x_t)
 $$
 
-其中 $x_t \in \mathbb{R}^d$ 是第 $t$ 层的激活值，$g_{\theta_t}$ 是残差块。
+其中 $x_t \in \mathbb{R}^d$ 是第 $t$ 层的激活值, $g_{\theta_t}$ 是残差块。
 
 **Euler方法求解ODE**：
 
@@ -719,12 +725,12 @@ $$
 
 | 概念      | ODE（连续）                 | ResNet（离散）                    |
 | --------- | --------------------------- | --------------------------------- |
-| 状态      | $x(t)$                    | $x_t$（第$t$层激活）          |
+| 状态      | $x(t)$                    | $x_t$（第 $t$层激活）          |
 | 时间/深度 | $t \in [0, T]$            | $t = 0, 1, \ldots, L$（层索引） |
 | 动力学    | $\frac{dx}{dt} = f(x, t)$ | $x_{t+1} = x_t + g_t(x_t)$      |
 | 步长      | $h$（离散化精度）         | 隐含为1                           |
 
-**关系**：$g_{\theta_t}(x_t) = h \cdot f_{\theta_t}(x_t)$（ResNet中 $h=1$）
+**关系**: $g_{\theta_t}(x_t) = h \cdot f_{\theta_t}(x_t)$（ResNet中 $h=1$）
 
 **为什么引入ODE视角？**
 
@@ -743,7 +749,7 @@ ODE视角不是为了"装逼"，而是提供实际工具：
 
 **定理2.1（论文核心定理）**：
 
-设 $F(x) = x + g(x)$，其中 $g: \mathbb{R}^d \to \mathbb{R}^d$。如果 $\text{Lip}(g) < 1$，则：
+设 $F(x) = x + g(x)$，其中 $g: \mathbb{R}^d \to \mathbb{R}^d$。如果 $\mathrm{Lip}(g) < 1$，则：
 
 1. $F$ 是**单射**（injective）：不同的输入映射到不同的输出
 2. $F$ 的逆映射 $F^{-1}$ 存在且可以通过**不动点迭代**计算
@@ -762,7 +768,7 @@ $$
 则：
 
 $$
-\|x_1 - x_2\| = \|g(x_2) - g(x_1)\| \leq \text{Lip}(g) \|x_2 - x_1\| < \|x_2 - x_1\|
+\|x_1 - x_2\| = \|g(x_2) - g(x_1)\| \leq \mathrm{Lip}(g) \|x_2 - x_1\| < \|x_2 - x_1\|
 $$
 
 这意味着 $\|x_1 - x_2\| < \|x_1 - x_2\|$，矛盾！除非 $x_1 = x_2$。因此 $F$ 是单射。□
@@ -785,34 +791,34 @@ $$
 \begin{aligned}
 \|T_y(x_1) - T_y(x_2)\| &= \|(y - g(x_1)) - (y - g(x_2))\| \\
 &= \|g(x_2) - g(x_1)\| \\
-&\leq \text{Lip}(g) \|x_2 - x_1\| \\
-&< \|x_2 - x_1\| \quad (\because \text{Lip}(g) < 1)
+&\leq \mathrm{Lip}(g) \|x_2 - x_1\| \\
+&< \|x_2 - x_1\| \quad (\because \mathrm{Lip}(g) < 1)
 \end{aligned}
 $$
 
-所以 $\text{Lip}(T_y) = \text{Lip}(g) < 1$，$T_y$ 是压缩映射。□
+所以 $\mathrm{Lip}(T_y) = \mathrm{Lip}(g) < 1$, $T_y$ 是压缩映射。□
 
 **第四步：应用Banach定理**
 
 由Banach不动点定理：
 
-- $T_y$ 有唯一不动点 $x^*$
-- $T_y(x^*) = x^* \Rightarrow x^* = y - g(x^*) \Rightarrow y = x^* + g(x^*) = F(x^*)$
-- 从任意 $x_0$ 出发，迭代 $x_{n+1} = T_y(x_n) = y - g(x_n)$ 收敛到 $x^*$
+- $T_y$ 有唯一不动点 $x^{\ast}$
+- $T_y(x^{\ast}) = x^{\ast} \Rightarrow x^{\ast} = y - g(x^{\ast}) \Rightarrow y = x^{\ast} + g(x^{\ast}) = F(x^{\ast})$
+- 从任意 $x_0$ 出发，迭代 $x_{n+1} = T_y(x_n) = y - g(x_n)$ 收敛到 $x^{\ast}$
 
-因此 $F^{-1}(y) = x^*$ 存在且可通过不动点迭代计算。□
+因此 $F^{-1}(y) = x^{\ast}$ 存在且可通过不动点迭代计算。□
 
 **第五步：Lipschitz连续性**
 
 由于 $F(x) = x + g(x)$：
 
 $$
-\|F(x_1) - F(x_2)\| = \|x_1 - x_2 + g(x_1) - g(x_2)\| \leq (1 + \text{Lip}(g)) \|x_1 - x_2\|
+\|F(x_1) - F(x_2)\| = \|x_1 - x_2 + g(x_1) - g(x_2)\| \leq (1 + \mathrm{Lip}(g)) \|x_1 - x_2\|
 $$
 
-所以 $\text{Lip}(F) \leq 1 + \text{Lip}(g)$。
+所以 $\mathrm{Lip}(F) \leq 1 + \mathrm{Lip}(g)$。
 
-类似地，由于 $F^{-1}$ 是 $T_y$ 的不动点，可以证明 $\text{Lip}(F^{-1}) \leq \frac{1}{1 - \text{Lip}(g)}$。□
+类似地，由于 $F^{-1}$ 是 $T_y$ 的不动点，可以证明 $\mathrm{Lip}(F^{-1}) \leq \frac{1}{1 - \mathrm{Lip}(g)}$。□
 
 **定理证明完毕**。
 
@@ -828,10 +834,10 @@ $$
 
 **引理2（论文Lemma 2）**：
 
-设 $F(x) = x + g(x)$，其中 $\text{Lip}(g) = L < 1$。则：
+设 $F(x) = x + g(x)$，其中 $\mathrm{Lip}(g) = L < 1$。则：
 
 $$
-\text{Lip}(F) \leq 1 + L \quad \text{且} \quad \text{Lip}(F^{-1}) \leq \frac{1}{1-L}
+\mathrm{Lip}(F) \leq 1 + L \quad \mathrm{且} \quad \mathrm{Lip}(F^{-1}) \leq \frac{1}{1-L}
 $$
 
 **等价形式**（双向Lipschitz界）：
@@ -850,7 +856,7 @@ $$
 
 **证明**：
 
-**第一部分：证明 $\text{Lip}(F) \leq 1 + L$（上界）**
+**第一部分：证明 $\mathrm{Lip}(F) \leq 1 + L$（上界）**
 
 对任意 $x_1, x_2$：
 
@@ -858,17 +864,17 @@ $$
 \begin{aligned}
 \|F(x_1) - F(x_2)\| &= \|(x_1 + g(x_1)) - (x_2 + g(x_2))\| \\
 &= \|(x_1 - x_2) + (g(x_1) - g(x_2))\| \\
-&\leq \|x_1 - x_2\| + \|g(x_1) - g(x_2)\| \quad \text{(三角不等式)} \\
-&\leq \|x_1 - x_2\| + L \|x_1 - x_2\| \quad \text{(Lipschitz性质)} \\
+&\leq \|x_1 - x_2\| + \|g(x_1) - g(x_2)\| \quad \mathrm{(三角不等式)} \\
+&\leq \|x_1 - x_2\| + L \|x_1 - x_2\| \quad \mathrm{(Lipschitz性质)} \\
 &= (1 + L) \|x_1 - x_2\|
 \end{aligned}
 $$
 
-因此 $\text{Lip}(F) \leq 1 + L$。□
+因此 $\mathrm{Lip}(F) \leq 1 + L$。□
 
 **第二部分：证明下界 $(1-L)$**
 
-利用逆三角不等式：$\|a + b\| \geq |\|a\| - \|b\||$
+利用逆三角不等式: $\|a + b\| \geq |\|a\| - \|b\||$
 
 $$
 \begin{aligned}
@@ -892,7 +898,7 @@ $$
 \|x_1 - x_2\| \leq \frac{1}{1-L} \|F(x_1) - F(x_2)\|
 $$
 
-这意味着 $\text{Lip}(F^{-1}) \leq \frac{1}{1-L}$。□
+这意味着 $\mathrm{Lip}(F^{-1}) \leq \frac{1}{1-L}$。□
 
 ---
 
@@ -902,8 +908,8 @@ $$
 
 | 方向           | Lipschitz常数                             | 几何意义                     |
 | -------------- | ----------------------------------------- | ---------------------------- |
-| 前向$F$      | $\text{Lip}(F) \leq 1 + L$              | 最多拉伸$(1+L)$ 倍         |
-| 逆向$F^{-1}$ | $\text{Lip}(F^{-1}) \leq \frac{1}{1-L}$ | 最多拉伸$\frac{1}{1-L}$ 倍 |
+| 前向 $F$      | $\mathrm{Lip}(F) \leq 1 + L$              | 最多拉伸 $(1+L)$ 倍         |
+| 逆向 $F^{-1}$ | $\mathrm{Lip}(F^{-1}) \leq \frac{1}{1-L}$ | 最多拉伸 $\frac{1}{1-L}$ 倍 |
 
 **2. 训练稳定性**
 
@@ -914,22 +920,22 @@ $$
 
 假设 $L = 0.9$：
 
-- $\text{Lip}(F) \leq 1.9$
-- $\text{Lip}(F^{-1}) \leq 10$
+- $\mathrm{Lip}(F) \leq 1.9$
+- $\mathrm{Lip}(F^{-1}) \leq 10$
 
 假设 $L = 0.5$：
 
-- $\text{Lip}(F) \leq 1.5$
-- $\text{Lip}(F^{-1}) \leq 2$
+- $\mathrm{Lip}(F) \leq 1.5$
+- $\mathrm{Lip}(F^{-1}) \leq 2$
 
-**关键观察**：$L$ 越小，$F^{-1}$ 越稳定！
+**关键观察**: $L$ 越小, $F^{-1}$ 越稳定！
 
 **4. 为什么这对i-ResNet至关重要？**
 
 在Normalizing Flow中，我们需要：
 
-1. **前向（生成）**：$x = F^{-1}(z)$
-2. **逆向（推理）**：$z = F(x)$
+1. **前向（生成）**: $x = F^{-1}(z)$
+2. **逆向（推理）**: $z = F(x)$
 
 这个引理保证了**两个方向都是数值稳定的**，不会出现梯度消失或爆炸。
 
@@ -937,7 +943,7 @@ $$
 
 #### 3.4 如何构建满足定理的ResNet Block
 
-**问题**：如何保证 $\text{Lip}(g) < 1$？
+**问题**：如何保证 $\mathrm{Lip}(g) < 1$？
 
 神经网络残差块通常是多层组合：
 
@@ -948,7 +954,7 @@ $$
 **利用复合函数的Lipschitz性质**：
 
 $$
-\text{Lip}(g) \leq \prod_{k=1}^K \text{Lip}(\sigma_k) \cdot \prod_{k=1}^K \|W_k\|_2
+\mathrm{Lip}(g) \leq \prod_{k=1}^K \mathrm{Lip}(\sigma_k) \cdot \prod_{k=1}^K \|W_k\|_2
 $$
 
 **策略1：约束权重矩阵的谱范数**
@@ -964,7 +970,7 @@ $$
 **但问题**：如果所有 $\|W_k\|_2 = 1$ 且激活函数 Lip = 1（如ReLU），则：
 
 $$
-\text{Lip}(g) \leq 1 \cdot 1 \cdot \cdots \cdot 1 = 1
+\mathrm{Lip}(g) \leq 1 \cdot 1 \cdot \cdots \cdot 1 = 1
 $$
 
 不满足 $< 1$ 的严格要求！
@@ -978,7 +984,7 @@ $$
 例如 $\alpha = 0.9$：
 
 $$
-\text{Lip}(\bar{g}) = \alpha \cdot \text{Lip}(g) < 1
+\mathrm{Lip}(\bar{g}) = \alpha \cdot \mathrm{Lip}(g) < 1
 $$
 
 **策略3：软约束（论文实际使用）**
@@ -1048,7 +1054,7 @@ $$
 
 **小结**：
 
-- 理论要求：$\text{Lip}(g) < 1$
+- 理论要求: $\mathrm{Lip}(g) < 1$
 - 实际做法：谱归一化 + 合适的缩放/激活函数
 - 计算方法：幂迭代估计谱范数
 
@@ -1076,14 +1082,14 @@ $$
 
 **直接计算的困难**：
 
-- $J_g \in \mathbb{R}^{d \times d}$（对于图像，$d$ 可能是 $28 \times 28 \times 3 \approx 2352$）
-- 直接计算行列式：$O(d^3)$ 复杂度
+- $J_g \in \mathbb{R}^{d \times d}$（对于图像, $d$ 可能是 $28 \times 28 \times 3 \approx 2352$）
+- 直接计算行列式: $O(d^3)$ 复杂度
 - 对于高维数据**完全不可行**
 
 **其他Flow方法的解决方案**：
 
-- **耦合层（Glow）**：雅可比是分块三角矩阵，行列式是对角元素之积，$O(d)$
-- **自回归（MAF/IAF）**：雅可比是三角矩阵，$O(d)$
+- **耦合层（Glow）**：雅可比是分块三角矩阵，行列式是对角元素之积, $O(d)$
+- **自回归（MAF/IAF）**：雅可比是三角矩阵, $O(d)$
 
 **i-ResNet的挑战**：
 
@@ -1094,29 +1100,29 @@ $$
 
 #### 4.2 解决方案：幂级数展开 + 随机估计
 
-**关键观察**：由于 $\text{Lip}(g) < 1$，雅可比矩阵 $J_g$ 的谱范数 $\|J_g\|_2 < 1$。
+**关键观察**：由于 $\mathrm{Lip}(g) < 1$，雅可比矩阵 $J_g$ 的谱范数 $\|J_g\|_2 < 1$。
 
 **幂级数展开**：
 
 对于谱范数 $< 1$ 的矩阵 $A$，有：
 
 $$
-\log \det(I + A) = \text{tr}(\log(I + A)) = \text{tr}\left(\sum_{k=1}^{\infty} \frac{(-1)^{k+1}}{k} A^k\right)
+\log \det(I + A) = \mathrm{tr}(\log(I + A)) = \mathrm{tr}\left(\sum_{k=1}^{\infty} \frac{(-1)^{k+1}}{k} A^k\right)
 $$
 
 证明（简要）：
 
-- $\log(I + A)$ 的幂级数：$\log(I + A) = \sum_{k=1}^{\infty} \frac{(-1)^{k+1}}{k} A^k$（当 $\|A\| < 1$）
-- $\log \det(I + A) = \det(\log(I + A)) = \text{tr}(\log(I + A))$
+- $\log(I + A)$ 的幂级数: $\log(I + A) = \sum_{k=1}^{\infty} \frac{(-1)^{k+1}}{k} A^k$（当 $\|A\| < 1$）
+- $\log \det(I + A) = \det(\log(I + A)) = \mathrm{tr}(\log(I + A))$
 - 代入得证
 
 **截断近似**：
 
 $$
-\log \det(I + J_g) \approx \sum_{k=1}^{n} \frac{(-1)^{k+1}}{k} \text{tr}(J_g^k)
+\log \det(I + J_g) \approx \sum_{k=1}^{n} \frac{(-1)^{k+1}}{k} \mathrm{tr}(J_g^k)
 $$
 
-**但问题仍然存在**：如何计算 $\text{tr}(J_g^k)$？
+**但问题仍然存在**：如何计算 $\mathrm{tr}(J_g^k)$？
 
 **直接计算** $J_g^k$ 仍然是 $O(d^3)$！
 
@@ -1129,7 +1135,7 @@ $$
 对于任意矩阵 $A$：
 
 $$
-\text{tr}(A) = \mathbb{E}_{\epsilon \sim \mathcal{N}(0, I)} [\epsilon^T A \epsilon]
+\mathrm{tr}(A) = \mathbb{E}_{\epsilon \sim \mathcal{N}(0, I)} [\epsilon^T A \epsilon]
 $$
 
 **证明**：
@@ -1138,15 +1144,15 @@ $$
 \begin{aligned}
 \mathbb{E}[\epsilon^T A \epsilon] &= \mathbb{E}\left[\sum_{i,j} \epsilon_i A_{ij} \epsilon_j\right] \\
 &= \sum_{i,j} A_{ij} \mathbb{E}[\epsilon_i \epsilon_j] \\
-&= \sum_{i,j} A_{ij} \delta_{ij} \quad (\text{因为 } \mathbb{E}[\epsilon_i \epsilon_j] = \delta_{ij}) \\
-&= \sum_i A_{ii} = \text{tr}(A)
+&= \sum_{i,j} A_{ij} \delta_{ij} \quad (\mathrm{因为 } \mathbb{E}[\epsilon_i \epsilon_j] = \delta_{ij}) \\
+&= \sum_i A_{ii} = \mathrm{tr}(A)
 \end{aligned}
 $$
 
 **随机估计**：
 
 $$
-\text{tr}(A) \approx \frac{1}{S} \sum_{s=1}^S \epsilon_s^T A \epsilon_s
+\mathrm{tr}(A) \approx \frac{1}{S} \sum_{s=1}^S \epsilon_s^T A \epsilon_s
 $$
 
 其中 $\epsilon_s \sim \mathcal{N}(0, I)$ 是独立采样。
@@ -1166,13 +1172,13 @@ $$
 给定函数 $g: \mathbb{R}^d \to \mathbb{R}^d$ 和向量 $v \in \mathbb{R}^d$：
 
 $$
-\text{VJP}(g, x, v) = v^T \frac{\partial g}{\partial x} = v^T J_g
+\mathrm{VJP}(g, x, v) = v^T \frac{\partial g}{\partial x} = v^T J_g
 $$
 
 **JVP（Jacobian-Vector Product）的定义**：
 
 $$
-\text{JVP}(g, x, v) = \frac{\partial g}{\partial x} v = J_g v
+\mathrm{JVP}(g, x, v) = \frac{\partial g}{\partial x} v = J_g v
 $$
 
 **自动微分支持**：
@@ -1189,16 +1195,16 @@ $$
 
 **复杂度**：
 
-- 每次JVP：$O(d)$（与前向传播相同）
-- $k$ 次JVP：$O(kd)$
-- $n$ 项求和：$O(nkd)$
-- $S$ 个随机样本：$O(Snkd)$
+- 每次JVP: $O(d)$（与前向传播相同）
+- $k$ 次JVP: $O(kd)$
+- $n$ 项求和: $O(nkd)$
+- $S$ 个随机样本: $O(Snkd)$
 
 **实际参数**：
 
 - $n \approx 5-10$（幂级数项数）
 - $S \approx 1$（随机样本数，常常1个就够！）
-- 总复杂度：$O(nkd) \approx O(d)$（相对于前向传播）
+- 总复杂度: $O(nkd) \approx O(d)$（相对于前向传播）
 
 ---
 
@@ -1258,10 +1264,10 @@ def compute_jvp(g, x, v):
 
 **幂级数截断误差**：
 
-由于 $\|J_g\|_2 \leq \text{Lip}(g) = c < 1$：
+由于 $\|J_g\|_2 \leq \mathrm{Lip}(g) = c < 1$：
 
 $$
-\left| \log \det(I + J_g) - \sum_{k=1}^n \frac{(-1)^{k+1}}{k} \text{tr}(J_g^k) \right| \leq \sum_{k=n+1}^{\infty} \frac{c^k}{k} = O(c^{n+1})
+\left| \log \det(I + J_g) - \sum_{k=1}^n \frac{(-1)^{k+1}}{k} \mathrm{tr}(J_g^k) \right| \leq \sum_{k=n+1}^{\infty} \frac{c^k}{k} = O(c^{n+1})
 $$
 
 **随机估计误差**：
@@ -1269,7 +1275,7 @@ $$
 Hutchinson估计的方差：
 
 $$
-\text{Var}[\epsilon^T A \epsilon] = 2 \|A\|_F^2
+\mathrm{Var}[\epsilon^T A \epsilon] = 2 \|A\|_F^2
 $$
 
 其中 $\|A\|_F$ 是Frobenius范数。
@@ -1278,7 +1284,7 @@ $$
 
 **实际选择**：
 
-- $c \approx 0.7$：$n = 5$ 时误差 $\approx 0.7^6 / 6 \approx 0.02$
+- $c \approx 0.7$: $n = 5$ 时误差 $\approx 0.7^6 / 6 \approx 0.02$
 - $S = 1$：单个样本通常足够（因为在大批量训练中会平均）
 
 ---
@@ -1304,9 +1310,9 @@ $$
 
 **数学保证**：
 
-1. **Lipschitz约束**（$\text{Lip}(g) < 1$）保证：
+1. **Lipschitz约束**($\mathrm{Lip}(g) < 1$)保证：
    - 可逆性（Banach定理）
-   - 幂级数收敛（$\|J_g\| < 1$）
+   - 幂级数收敛($\|J_g\| < 1$)
 2. **幂级数展开**：将行列式转化为迹
 3. **Hutchinson估计**：将迹转化为向量内积
 4. **自动微分**：高效计算JVP

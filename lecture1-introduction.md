@@ -65,7 +65,7 @@ $$
 p(y|x) = \frac{p(x|y)p(y)}{p(x)}
 $$
 
-其中 $p(x)$ 对于给定 $x$ 是常数，$p(y)$ 是已知的先验
+其中 $p(x)$ 对于给定 $x$ 是常数, $p(y)$ 是已知的先验
 
 - **判别模型能做生成吗？** 理论上可以通过：
 
@@ -235,7 +235,7 @@ $$
 
 - y: 隐式条件"遵循 CIFAR10 分布的图像"
 - x: 生成的 CIFAR10 风格图像
-- **重要区分**：$p(x|y)$ 是给定某类别的图像分布，$p(x)$ 是所有图像的分布
+- **重要区分**: $p(x|y)$ 是给定某类别的图像分布, $p(x)$ 是所有图像的分布
 - 引用：Karras 等人"Elucidating the Design Space of Diffusion-Based Generative Models"，NeurIPS 2022
 
 **案例 7：分类（生成视角）**
