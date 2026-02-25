@@ -11,7 +11,7 @@
   - [2.2 LSTM (Long Short-Term Memory) 的数学原理](#22-lstm-long-short-term-memory-的数学原理)
   - [2.3 二维卷积与因果卷积](#23-二维卷积与因果卷积)
   - [2.4 Jacobian 矩阵的下三角结构](#24-jacobian-矩阵的下三角结构)
-  - [2.5 残差���接 (Residual Connections)](#25-残差连接-residual-connections)
+  - [2.5 残差连接 (Residual Connections)](#25-残差连接-residual-connections)
 - [3. 论文的主要逻辑](#3-论文的主要逻辑)
   - [3.1 像素生成的自回归分解](#31-像素生成的自回归分解)
   - [3.2 Row LSTM架构](#32-row-lstm架构)
