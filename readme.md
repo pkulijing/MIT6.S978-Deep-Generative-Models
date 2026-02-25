@@ -15,7 +15,7 @@ MIT 深度生成模型课程学习笔记，基于 genspark 生成的初版，通
 - [Reading 2.1: Normalizing Flow & Glow](reading2.1-normalizing-flow-glow.md)
 - [Reading 2.2: i-ResNet](reading2.2-i-resnet.md)
 - [Reading 3.1: Auto Regressive Model](reading3.1-auto-regressive-bengio.md)
-
+- [Reading 3.2: PixelRNN](reading3.2-pixel-rnn.md)
 ## Assignments
 
 - [Assignment 1: VAE](pset1.ipynb)
