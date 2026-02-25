@@ -107,3 +107,9 @@ Paper summaries with mathematical derivations:
 - Markdown files contain LaTeX math expressions for formulas
 - Code comments in notebooks are primarily in Chinese
 - Images referenced in markdown are stored in [assets/](assets/) directory
+
+## Documentation Conventions
+
+### Table of Contents
+
+All markdown notes should include a TOC (`## 目录`) placed immediately after the title (before any content). TOC depth should cover all heading levels present in the document, up to 4 levels (`####`). TOC anchor links follow GitHub Markdown conventions: lowercase, spaces replaced by hyphens, special characters and emojis stripped.

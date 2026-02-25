@@ -6,6 +6,31 @@
 
 本章深入探讨了**潜在变量模型**（Latent Variable Models），详细推导了**ELBO**（Evidence Lower Bound，证据下界），并解释了 VAE 的完整架构。课程还探讨了 VAE 与 EM 算法的关系，以及 VQ-VAE 如何处理离散潜在变量。
 
+## 目录
+
+- [Slide 1-2: 课程概览](#-slide-1-2-课程概览)
+- [Slide 3-10: 潜在变量模型的基本设定](#-slide-3-10-潜在变量模型的基本设定)
+- [Slide 11-23: ELBO 的详细推导](#-slide-11-23-elbo-的详细推导)
+- [Slide 21-23: 参数化 q 和简化 ELBO](#-slide-21-23-参数化-q-和简化-elbo)
+- [Slide 24-30: VAE 架构与重参数化技巧](#-slide-24-30-vae-架构与重参数化技巧)
+- [Slide 31-35: VAE 的推理（生成）](#-slide-31-35-vae-的推理生成)
+- [Slide 36-40: "自编码分布"的视角](#-slide-36-40-自编码分布的视角)
+- [Slide 41-48: VAE 在 MNIST 上的可视化](#-slide-41-48-vae-在-mnist-上的可视化)
+- [Slide 49-67: VAE 与 EM 算法的关系](#-slide-49-67-vae-与-em-算法的关系)
+  - [EM 算法回顾](#em-算法回顾)
+  - [VAE vs. EM 的对比](#vae-vs-em-的对比)
+  - [K-means 作为 EM 的特殊情况](#k-means-作为-em-的特殊情况)
+- [Slide 68-74: Vector Quantized VAE (VQ-VAE)](#-slide-68-74-vector-quantized-vae-vq-vae)
+  - [动机：为什么需要离散潜在变量？](#动机为什么需要离散潜在变量)
+  - [VQ-VAE 与标准 VAE 的对比](#vq-vae-与标准-vae-的对比)
+  - [离散潜在变量的挑战](#离散潜在变量的挑战)
+  - [对 K-means 隐式鼓励码本均匀性的详细解释](#对-k-means-隐式鼓励码本均匀性的详细解释)
+- [Slide 75-78: VQ-VAE 的完整架构](#-slide-75-78-vq-vae-的完整架构)
+  - [Straight-Through Estimator（直通估计器）](#straight-through-estimator直通估计器)
+- [Slide 79-81: VQ-VAE 作为 Tokenizer](#-slide-79-81-vq-vae-作为-tokenizer)
+- [Slide 82-83: 课程总结与参考文献](#-slide-82-83-课程总结与参考文献)
+- [扩展阅读](#扩展阅读)
+
 ### 📖 Slide 1-2: 课程概览
 
 Lecture 2 的主要内容：

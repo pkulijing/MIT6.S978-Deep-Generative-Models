@@ -2,6 +2,22 @@
 
 ## 课程笔记与详细解析 (Fall 2024)
 
+## 目录
+
+- [第一讲：课程简介 Introduction](#第一讲课程简介-introduction)
+  - [Slide 1-2: 课程标题与 GenAI 时代](#slide-1-2-课程标题与-genai-时代)
+  - [Slide 2-7: GenAI 时代的典型应用](#slide-2-7-genai-时代的典型应用)
+  - [Slide 8-9: GenAI 时代之前的生成模型](#slide-8-9-genai-时代之前的生成模型)
+  - [Slide 10-11: 什么是生成模型？](#slide-10-11-什么是生成模型)
+  - [Slide 12-15: 判别式模型 vs. 生成式模型](#slide-12-15-判别式模型-vs-生成式模型)
+  - [Slide 16-21: 概率建模（Probabilistic Modeling）](#slide-16-21-概率建模probabilistic-modeling)
+  - [Slide 22-27: 生成模型的概率建模流程](#slide-22-27-生成模型的概率建模流程)
+  - [Slide 28-30: 什么是深度生成模型？](#slide-28-30-什么是深度生成模型)
+  - [Slide 31-35: 分布建模的设计与学习](#slide-31-35-分布建模的设计与学习)
+  - [Slide 36: 深度生成模型的完整框架](#slide-36-深度生成模型的完整框架)
+  - [Slide 37-50: 将真实世界问题表述为生成模型](#slide-37-50-将真实世界问题表述为生成模型)
+  - [第一讲总结](#第一讲总结)
+
 ## [第一讲：课程简介 Introduction](https://mit-6s978.github.io/assets/pdfs/lec1_intro.pdf)
 
 本章主要介绍了生成式人工智能（GenAI）时代的背景，对比了判别式模型与生成式模型，并确立了概率建模作为本课程的核心框架。

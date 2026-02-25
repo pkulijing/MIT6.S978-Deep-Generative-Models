@@ -2,6 +2,35 @@
 
 ## 课程笔记与详细解析 (Fall 2024)
 
+## 目录
+
+- [阅读材料 1：图像先验 Image Priors](#阅读材料-1图像先验-image-priors)
+  - [论文 1：From Learning Models of Natural Image Patches to Whole Image Restoration](#论文-1from-learning-models-of-natural-image-patches-to-whole-image-restoration)
+    - [论文主旨](#论文主旨)
+    - [三个核心问题](#三个核心问题)
+    - [关键发现](#关键发现)
+    - [实验结果](#实验结果)
+    - [与课程的关系](#与课程的关系)
+    - [核心贡献总结](#核心贡献总结)
+  - [论文 2：Natural Images, Gaussian Mixtures and Dead Leaves](#论文-2natural-images-gaussian-mixtures-and-dead-leaves)
+    - [论文主旨](#论文主旨-1)
+    - [核心研究问题](#核心研究问题)
+    - [关键发现](#关键发现-1)
+    - [理论洞察](#理论洞察)
+    - [与课程的关系](#与课程的关系-1)
+  - [论文 3：Deep Image Prior](#论文-3deep-image-prior)
+    - [论文主旨](#论文主旨-2)
+    - [核心发现：网络结构 = 先验](#核心发现网络结构--先验)
+    - [方法](#方法)
+    - [为什么有效？](#为什么有效)
+    - [应用](#应用)
+    - [关键实验](#关键实验)
+    - [理论意义](#理论意义)
+    - [与课程的关系](#与课程的关系-2)
+    - [批判性思考](#批判性思考)
+    - [后续影响](#后续影响)
+  - [Week 2 Reading 总结](#week-2-reading-总结)
+
 ## 阅读材料 1：图像先验 Image Priors
 
 > 📚 **阅读材料对应课程第 2 周，在 Lecture 2 (VAE)之前学习**
