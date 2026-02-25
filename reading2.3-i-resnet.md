@@ -1,4 +1,4 @@
-# MIT 6.S978 Reading 2.2 [Invertible Residual Networks (2019, ICML)](https://arxiv.org/abs/1811.00995)
+# MIT 6.S978 Reading 2.3 [Invertible Residual Networks (2019, ICML)](https://arxiv.org/abs/1811.00995)
 
 ## 目录
 
