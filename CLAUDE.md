@@ -99,6 +99,7 @@ Paper summaries with mathematical derivations:
 - [reading2.1-normalizing-flow-glow.md](reading2.1-normalizing-flow-glow.md) - Glow model
 - [reading2.2-i-resnet.md](reading2.2-i-resnet.md) - Invertible ResNets
 - [reading3.1-auto-regressive-bengio.md](reading3.1-auto-regressive-bengio.md) - Bengio's autoregressive work
+- [reading3.2-pixel-rnn.md](reading3.2-pixel-rnn.md) - Pixel Recurrent Neural Networks (PixelRNN/PixelCNN)
 
 ## Common Patterns
 

@@ -1,5 +1,28 @@
 # MIT 6.S978 Reading 3.2 [Pixel Recurrent Neural Networks (2016, ICML)](https://arxiv.org/pdf/1601.06759)
 
+## 目录
+
+- [1. 论文的动机 (Motivation)](#1-论文的动机-motivation)
+  - [1.1 生成式图像建模的挑战](#11-生成式图像建模的挑战)
+  - [1.2 将图像建模问题转化为序列问题](#12-将图像建模问题转化为序列问题)
+  - [1.3 与Bengio 1999论文的联系](#13-与bengio-1999论文的联系)
+- [2. 论文的数学基础](#2-论文的数学基础)
+  - [2.1 自回归模型 (Autoregressive Models)](#21-自回归模型-autoregressive-models)
+  - [2.2 LSTM (Long Short-Term Memory) 的数学原理](#22-lstm-long-short-term-memory-的数学原理)
+  - [2.3 二维卷积与因果卷积](#23-二维卷积与因果卷积)
+  - [2.4 Jacobian 矩阵的下三角结构](#24-jacobian-矩阵的下三角结构)
+  - [2.5 残差���接 (Residual Connections)](#25-残差连接-residual-connections)
+- [3. 论文的主要逻辑](#3-论文的主要逻辑)
+  - [3.1 像素生成的自回归分解](#31-像素生成的自回归分解)
+  - [3.2 Row LSTM架构](#32-row-lstm架构)
+  - [3.3 Diagonal BiLSTM架构](#33-diagonal-bilstm架构)
+  - [3.4 Masked Convolution](#34-masked-convolution)
+- [4. 总结](#4-总结)
+  - [4.1 论文的主要贡献](#41-论文的主要贡献)
+  - [4.2 相比Bengio 1999的进步](#42-相比bengio-1999的进步)
+  - [4.3 引出与第三篇论文(IAF)的联系](#43-引出与第三篇论文iaf的联系)
+
+
 ## 1. 论文的动机 (Motivation)
 
 ### 1.1 生成式图像建模的挑战
@@ -159,7 +182,7 @@ flowchart TB
 
 这里的二维卷积就是CNN中的卷积操作，"二维"指的是**在二维空间(图像的高度和宽度方向)上进行卷积**。
 
-**标准2D卷积的完整形式**：对于输入图像 $X$ 和卷积核 $K$ (大小为 $k_h \times k_w$)，输出为：
+**标准2D卷积的完整形���**：对于输入图像 $X$ 和卷积核 $K$ (大小为 $k_h \times k_w$)，输出为：
 
 $$
 (K * X)_{i,j} = \sum_{m=0}^{k_h-1} \sum_{n=0}^{k_w-1} K_{m,n} \cdot X_{i-m, j-n}
@@ -514,7 +537,7 @@ $$
   * **核心目的**：绝对禁止特征通道在输入层与其自身建立连接（无 Self-connection），从物理层面杜绝网络直接“抄袭”原始输入中的目标像素值，防止信息泄露（Information Leakage）。
 * **Mask B（放宽的上下文掩码）：**
 
-  * **应用场景**：应用于除第一层外的所有后续卷积层（包括 `input-to-state` 卷积层以及其他的纯卷积层，如 1x1卷积）。
+  * **应用场景**：应用于除第一层外的所有后续卷积层（包括 `input-to-state` 卷积层以及其他的纯卷���层，如 1x1卷积）。
   * **规则放宽**：在完全保留 Mask A 空间因果约束和跨通道顺序 (RGB)的前提下，**允许颜色通道连接到其自身（Connection from a color to itself）**。
   * **连通性规则**：
     * 计算深层 **R 特征**时：除了左上方的历史信息，还允许连接上一层的 **R 特征**。
