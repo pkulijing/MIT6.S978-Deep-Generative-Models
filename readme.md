@@ -17,6 +17,8 @@ MIT 深度生成模型课程学习笔记，基于 genspark 生成的初版，通
 - [Reading 2.3: i-ResNet](reading2.3-i-resnet.md)
 - [Reading 3.1: Auto Regressive Model](reading3.1-auto-regressive-bengio.md)
 - [Reading 3.2: PixelRNN](reading3.2-pixel-rnn.md)
+- [Reading 3.3: IAF](reading3.3-iaf.md)
+
 ## Assignments
 
 - [Assignment 1: VAE](pset1.ipynb)
