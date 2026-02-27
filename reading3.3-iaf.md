@@ -1,7 +1,9 @@
 # MIT 6.S978 Reading 3.3 [Improved Variational Inference with Inverse Autoregressive Flow](https://arxiv.org/pdf/1606.04934)
 
 **作者**: Diederik P. Kingma, Tim Salimans, Rafal Jozefowicz, Xi Chen, Ilya Sutskever, Max Welling
+
 **会议**: NIPS 2016
+
 **关键词**: 变分推断、Normalizing Flow、自回归模型、VAE
 
 ---
@@ -53,7 +55,7 @@
 
 #### 2.1.1 ELBO的推导
 
-给定观测数据 $x$ 和潜在变量 $z$ ，我们希望最大化边缘对数似然：$\log p(x) = \log \int p(x, z) dz$. 这通常是不可处理的。
+给定观测数据 $x$ 和潜在变量 $z$ ，我们希望最大化边缘对数似然: $\log p(x) = \log \int p(x, z) dz$. 这通常是不可处理的。
 
 变分推断引入近似后验 $q(z|x)$ ，推导出ELBO：
 
@@ -191,7 +193,7 @@ $$
 \end{pmatrix}
 $$
 
-其行列式等于对角元素的乘积，计算复杂度为$O(D)$：
+其行列式等于对角元素的乘积，计算复杂度为 $O(D)$：
 
 $$
 \begin{aligned}\det \frac{\partial y}{\partial \epsilon} &= \prod_{i=1}^{D} \sigma_i \\
@@ -297,7 +299,7 @@ $$
 为了保证这个Jacobian行列式易于计算，需要保证 $\mu,\;\sigma$ 与 $z_{t-1}$ 的关系与自回归中相同，从而得到上三角Jacobian行列式：
 
 - $j\gt i$ 时没有依赖关系：AR NN 的结构保证，通过掩码实现。偏导数整体为0
-- $j=i$ 时没有依赖关系：AR NN 的结构保证，通过掩码实现。偏导数值为$\sigma_{t,i}$
+- $j=i$ 时没有依赖关系：AR NN 的结构保证，通过掩码实现。偏导数值为 $\sigma_{t,i}$
 - $j\lt i$ 时有依赖关系：偏导数非0，但不影响行列式计算
 
 最终IAF Step 的Jacobian行列式的值就是 $\prod_{i=1}^{D}\sigma_i$.
@@ -306,9 +308,23 @@ $$
 
 我们把传统的AR NN和IAF的AR NN写成相似的模式，便能看出来为什么IAF是“逆向”的。
 
-- 传统AR： $z_{t,i} = \mu_i(z_{t,1:i-1}) + \sigma_i(z_{t,1:i-1}) \cdot \epsilon_i$
-- 传统AR的逆变换：$\epsilon_i=\frac{z_{t,i}-\mu_i(z_{t,1:i-1})}{\sigma_i(z_{t,1:i-1})}=\mu_i'(z_{t,1:i-1})+\sigma_i'(z_{t,1:i-1})\cdot z_{t,i}$
-- IAF的AR变换：$z_{t,i}=\mu_i(z_{t-1,1:i-1})+\sigma_i(z_{t-1,1:i-1})\cdot z_{t-1,i}$
+- 传统AR:
+
+$$
+z_{t,i} = \mu_i(z_{t,1:i-1}) + \sigma_i(z_{t,1:i-1}) \cdot \epsilon_i
+$$
+
+- 传统AR的逆变换:
+
+$$
+\epsilon_i=\frac{z_{t,i}-\mu_i(z_{t,1:i-1})}{\sigma_i(z_{t,1:i-1})}=\mu\prime_i(z_{t,1:i-1})+\sigma\prime_i(z_{t,1:i-1})\cdot z_{t,i}
+$$
+
+- IAF的AR变换:
+
+$$
+z_{t,i}=\mu_i(z_{t-1,1:i-1})+\sigma_i(z_{t-1,1:i-1})\cdot z_{t-1,i}
+$$
 
 传统AR逆变换与IAF变换的共同点是：神经网络的输入不是 $\mu,\sigma$ 表征的高斯分布变量本身，在计算 $\mu,\sigma$ 时可以拿到完整的值。传统AR的逆变换是从 $\mathbf{z_t}$ 反推回 $\mathbf{\epsilon}$ 的变换，而IAF的变换在Flow背景下含义更加清晰: 是从 $\mathbf{z_{t-1}}$ 到 $\mathbf{z_{t}}$ 的变换，神经网络的输入正是 $\mathbf{z_{t-1}}$. $\mu,\sigma$ 的所有分量可以直接并行计算，解决了AR用于Flow的最大问题。
 
@@ -328,7 +344,7 @@ $$
 \end{aligned}
 $$
 
-上述变换保证了 $\sigma_t\in(0,1)$, $\mathbf{z}_t$ 是 $\mathbf{z}_{t-1}$ 和 $\mathbf{m}_t$ 的插值，保证了数值稳定性。
+上述变换保证了 $\sigma_t\in(0,1)$, $\mathbf{z}\_t$ 是 $\mathbf{z}\_{t-1}$ 和 $\mathbf{m}_t$ 的插值，保证了数值稳定性。
 
 **遗忘门偏置初始化**：
 
@@ -412,11 +428,11 @@ $$
 
 三篇论文展示了自回归建模的三种应用模式：
 
-| 论文          | 应用场景     | 自回归方向 | 计算方式 | 目标              |
-| ------------- | ------------ | ---------- | -------- | ----------------- |
-| Bengio 1999   | 离散数据建模 | 正向       | 顺序     | 联合分布$p(x)$    |
-| PixelRNN 2016 | 图像生成     | 正向       | 顺序     | 联合分布$p(x)$    |
-| IAF 2016      | 变分推断     | **反向**   | **并行** | 后验分布$q(z\|x)$ |
+| 论文          | 应用场景     | 自回归方向 | 计算方式 | 目标               |
+| ------------- | ------------ | ---------- | -------- | ------------------ |
+| Bengio 1999   | 离散数据建模 | 正向       | 顺序     | 联合分布 $p(x)$    |
+| PixelRNN 2016 | 图像生成     | 正向       | 顺序     | 联合分布 $p(x)$    |
+| IAF 2016      | 变分推断     | **反向**   | **并行** | 后验分布 $q(z\|x)$ |
 
 ### 4.4 后续影响与发展方向
 

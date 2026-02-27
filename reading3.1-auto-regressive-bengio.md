@@ -1,6 +1,7 @@
 # Reading 3.1: [Modeling High-Dimensional Discrete Data with Multi-Layer Neural Networks](https://www.iro.umontreal.ca/~lisa/pointeurs/bb_2000_nips.pdf)
 
 **作者**：Yoshua Bengio, Samy Bengio
+
 **会议**：NIPS 1999
 
 ---
@@ -8,15 +9,14 @@
 ## 目录 (Table of Contents)
 
 1. [论文的动机 (Motivation)](#1-论文的动机-motivation)
-
    - 1.1. [核心问题](#11-核心问题)
      - 1.1.1. [什么是"维度灾难"？—— 通俗例子](#111-什么是维度灾难--通俗例子)
      - 1.1.2. [为什么是"灾难"？](#112-为什么是灾难)
      - 1.1.3. [本文的解决思路预览](#113-本文的解决思路预览)
    - 1.2. [已有方法的局限](#12-已有方法的局限)
    - 1.3. [与前序工作的联系](#13-与前序工作的联系)
-2. [论文的数学基础](#2-论文的数学基础)
 
+2. [论文的数学基础](#2-论文的数学基础)
    - 2.1. [概率论基础](#21-概率论基础)
      - 2.1.1. [条件概率与联合概率](#211-条件概率与联合概率)
      - 2.1.2. [概率链式法则](#212-概率链式法则)
@@ -29,8 +29,8 @@
    - 2.5. [Jacobian矩阵与行列式](#25-jacobian矩阵与行列式)
      - 2.5.1. [Jacobian矩阵](#251-jacobian矩阵)
      - 2.5.2. [下三角矩阵的行列式](#252-下三角矩阵的行列式)
-3. [论文的主要逻辑](#3-论文的主要逻辑)
 
+3. [论文的主要逻辑](#3-论文的主要逻辑)
    - 3.1. [模型架构](#31-模型架构)
      - 3.1.1. [整体框架与网络结构](#311-整体框架与网络结构)
      - 3.1.2. [参数复杂度分析](#312-参数复杂度分析)
@@ -38,8 +38,8 @@
    - 3.2. [训练方法](#32-训练方法)
      - 3.2.1. [优化目标](#321-优化目标)
      - 3.2.2. [其他工程细节](#322-其他工程细节)
-4. [总结](#3-总结)
 
+4. [总结](#3-总结)
    - 4.1. [论文解决的核心问题](#31-论文解决的核心问题)
    - 4.2. [与后续工作的联系](#32-与后续工作的联系)
    - 4.3. [局限与未来方向](#33-局限与未来方向)
@@ -91,16 +91,15 @@
 这种现象被称为"灾难"是因为：
 
 1. **数据永远不够**：
-
    - 变量数量 $n$ 线性增长
    - 组合数量 $2^n$ 指数级爆炸
    - 即使数据量很大，也只能覆盖极小一部分组合
-2. **传统方法失效**：
 
+2. **传统方法失效**：
    - **查表法（频率统计）**：对未见过的组合赋予零概率 → 测试集上完全失败
    - **均匀平滑**：给所有未见组合相同的小概率 → 无法区分"合理但未见过"和"完全不合理"的组合
-3. **需要智能泛化**：
 
+3. **需要智能泛化**：
    - 模型必须从见过的组合中**学习规律**
    - 对未见过的组合做出**合理推断**
    - 例如：如果见过"爱吃披萨+爱吃汉堡"，没见过"爱吃披萨+爱吃热狗"，模型应该能推断后者也是合理的（因为都是快餐）
@@ -130,16 +129,16 @@ $$
 
 请注意，这就是一个**多项式**。
 
-* 当 $Z_1=0, Z_2=0$ 时: $P = w_0$ (都不发生的概率)
-* 当 $Z_1=1, Z_2=0$ 时: $P = w_0 + w_1$
-* 当 $Z_1=1, Z_2=1$ 时: $P = w_0 + w_1 + w_2 + w_{12}$
+- 当 $Z_1=0, Z_2=0$ 时: $P = w_0$ (都不发生的概率)
+- 当 $Z_1=1, Z_2=0$ 时: $P = w_0 + w_1$
+- 当 $Z_1=1, Z_2=1$ 时: $P = w_0 + w_1 + w_2 + w_{12}$
 
 对于 0/1 变量，**任何复杂的概率表，都可以无损地转换成这种“多项式”形式**。
 
-* 如果有 $N$ 个变量，这个多项式最高次项就是 $N$ 次项 $\prod_{i=1}^N Z_i$
-* 项的数量是 $2^N$ 个，也就意味着有这么多参数
-* 第二类方法就是通过截断近似，忽略高阶项，做到多项式级别的参数数量，只保留二阶项时参数量就是 $O(N^2)$
-* 相比之下，本文中的方法没有做截断近似，参数量就是 $O(N^2)$，体现出极大优势
+- 如果有 $N$ 个变量，这个多项式最高次项就是 $N$ 次项 $\prod_{i=1}^N Z_i$
+- 项的数量是 $2^N$ 个，也就意味着有这么多参数
+- 第二类方法就是通过截断近似，忽略高阶项，做到多项式级别的参数数量，只保留二阶项时参数量就是 $O(N^2)$
+- 相比之下，本文中的方法没有做截断近似，参数量就是 $O(N^2)$，体现出极大优势
 
 ### 1.3. 与前序工作的联系
 
@@ -247,7 +246,7 @@ $$
 
 其中 $\alpha_i > 0$ 是超参数（伪计数）。假设观测数据中类别 $i$ 出现了 $n_i$ 次，总样本数 $N = \sum_i n_i$ 。
 
-Dirichlet分布是多项分布参数的共轭先验。这里**共轭**指的是代数结构的封闭性Closure，由于后验=似然*先验，多项分布的似然 $P(X|\theta) \propto \theta_1^{x_1} \cdot \theta_2^{x_2} \cdots \theta_k^{x_k}$，在Dirichlet先验下得到的后验也是同样的形式，只是指数变了。
+Dirichlet分布是多项分布参数的共轭先验。这里**共轭**指的是代数结构的封闭性Closure，由于后验=似然\*先验，多项分布的似然 $P(X|\theta) \propto \theta_1^{x_1} \cdot \theta_2^{x_2} \cdots \theta_k^{x_k}$，在Dirichlet先验下得到的后验也是同样的形式，只是指数变了。
 
 - **最大似然估计（MLE）**：
 
@@ -405,13 +404,12 @@ $$
 **两种推理场景**：
 
 1. **采样/生成任务**（自回归逐步生成）：
-
    - 初始输入空向量 → 采样 $Z_1 \sim P(Z_1)$
    - 输入 $z_1$ → 采样 $Z_2 \sim P(Z_2|z_1)$
    - 输入 $z_1, z_2$ → 采样 $Z_3 \sim P(Z_3|z_1, z_2)$
    - ⋯ 最终生成完整样本 $(z_1, ..., z_n)$
-2. **概率估计/打分任务**（一次性前向传播）：
 
+2. **概率估计/打分任务**（一次性前向传播）：
    - 输入完整序列 $(z_1, ..., z_n)$
    - 计算对数似然: $\log P(z) = \sum_{i=1}^{n} \log(g_i)$
    - 用于异常检测、分类等任务（**论文主要场景**）
@@ -433,7 +431,7 @@ class AutoregressiveMLP(nn.Module):
     def __init__(self, n_vars, hidden_size):
         super().__init__()
         self.n_vars = n_vars
-  
+
         # 为每个变量创建独立的隐藏层和输出层
         self.hidden_layers = nn.ModuleList([
             nn.Linear(i, hidden_size) for i in range(n_vars)
@@ -441,7 +439,7 @@ class AutoregressiveMLP(nn.Module):
         self.output_layers = nn.ModuleList([
             nn.Linear(hidden_size, 2) for _ in range(n_vars)  # 2个类别（0/1）
         ])
-  
+
     def forward(self, z):
         """
         Args:
@@ -451,7 +449,7 @@ class AutoregressiveMLP(nn.Module):
         """
         batch_size = z.size(0)
         log_probs = []
-  
+
         for i in range(self.n_vars):
             if i == 0:
                 # 第一个变量：无条件分布
@@ -459,30 +457,30 @@ class AutoregressiveMLP(nn.Module):
             else:
                 # 后续变量：只依赖于前面的变量（因果掩码）
                 h = torch.tanh(self.hidden_layers[i](z[:, :i]))
-  
+
             # 输出层：softmax得到条件概率
             logits = self.output_layers[i](h)
             log_prob = torch.log_softmax(logits, dim=-1)
             log_probs.append(log_prob)
-  
+
         return torch.stack(log_probs, dim=1)  # [batch_size, n_vars, 2]
-  
+
     def sample(self, batch_size=1):
         """自回归采样生成新样本"""
         samples = torch.zeros(batch_size, self.n_vars)
-  
+
         for i in range(self.n_vars):
             if i == 0:
                 h = torch.zeros(batch_size, self.hidden_layers[0].in_features)
             else:
                 h = torch.tanh(self.hidden_layers[i](samples[:, :i]))
-  
+
             logits = self.output_layers[i](h)
             probs = torch.softmax(logits, dim=-1)
             samples[:, i] = torch.multinomial(probs, 1).squeeze()
-  
+
         return samples
-  
+
     def log_likelihood(self, z):
         """计算样本的对数似然"""
         log_probs = self.forward(z)  # [batch_size, n_vars, 2]
@@ -529,7 +527,7 @@ print(f"Generated samples shape: {new_samples.shape}")
 
 **神经网络的"尚方宝剑"：通用近似定理**
 
-论文原文提到："*However, as H is increased, representation theorems for neural networks suggest that we should be able to approximate with arbitrary precision the true joint distribution.*"（随着 $H$ 增大，神经网络的表示定理表明我们能够以任意精度逼近真实的联合分布。）
+论文原文提到："_However, as H is increased, representation theorems for neural networks suggest that we should be able to approximate with arbitrary precision the true joint distribution._"（随着 $H$ 增大，神经网络的表示定理表明我们能够以任意精度逼近真实的联合分布。）
 
 这里指的是**通用近似定理（Universal Approximation Theorem）**，它是神经网络的理论基石，也是Bengio在1999年向学术界推销神经网络时的核心论据。
 
@@ -548,17 +546,16 @@ $$
 **直观理解**：
 
 1. **任意函数都可以用"分段线性"逼近**：
-
    - 想象你要画一条复杂的曲线
    - 你可以用很多很多条短直线段拼接（折线逼近）
    - 隐藏单元越多($H$ 越大)，折线段越多，逼近越精确
-2. **神经网络的"隐藏单元=基函数"**：
 
+2. **神经网络的"隐藏单元=基函数"**：
    - 每个隐藏单元 $\sigma(v_i^T x + b_i)$ 相当于一个"特征探测器"
    - 输出层的权重 $w_i$ 将这些特征线性组合
    - 足够多的特征探测器($H \to \infty$)可以表示任何函数
-3. **对本文的意义**：
 
+3. **对本文的意义**：
    - Multi-binomial模型只能捕捉二阶依赖($Z_i Z_j$ 项)
    - 如果真实分布需要高阶项（如 $Z_1 Z_2 Z_3$ 三阶依赖），multi-binomial无能为力
    - 神经网络通过增加 $H$，理论上可以逼近包含任意高阶依赖的真实联合分布 $P(Z_1, ..., Z_n)$
@@ -580,15 +577,14 @@ $$
 虽然这个定理是神经网络的"理论保证"，但它也有局限：
 
 1. **只保证存在性，不保证可学习性**：
-
    - 定理说"存在一个网络能逼近"，但没说你能不能通过梯度下降找到它
    - 可能需要天文数字的隐藏单元 $H$（论文中也承认"may be astronomically large"）
-2. **样本复杂度**：
 
+2. **样本复杂度**：
    - 即使网络能表示真实分布，你也需要足够的训练数据
    - 参数越多($H$ 越大)，需要的数据也越多（仍然受维度灾难影响）
-3. **优化困难**：
 
+3. **优化困难**：
    - 1999年的训练技术远不如现在（没有Adam、BatchNorm、Residual Connection等）
    - 这也是Bengio需要费力证明"神经网络真的能训练好"的原因
 
