@@ -44,7 +44,6 @@
     - [4.3.3 这为IAF提供了Motivation](#433-这为iaf提供了motivation)
     - [4.3.4 总结联系](#434-总结联系)
 
-
 ## 1. 论文的动机 (Motivation)
 
 ### 1.1 生成式图像建模的挑战
@@ -114,17 +113,16 @@ LSTM通过门控机制处理长期依赖。标准LSTM单元包含：
 这种区别体现在网络的信息流动设计上：
 
 1. **细胞状态 $c_t$ 的"长期"特性**：
-
    - **直通路径**: $c\_t = f\_t \odot c\_{t-1} + i\_t \odot \tilde{c}\_t$，旧记忆 $c\_{t-1}$ 通过简单的逐元素乘法直接流入 $c_t$
    - **梯度通畅**：反向传播时梯度可以近乎无损地通过这条路径传播（只要遗忘门 $f_t$ 接近1）
    - **选择性保留**：遗忘门 $f_t$ 控制保留多少旧记忆，可以让重要信息长期保存（例如图像中的全局结构信息）
-2. **隐藏状态 $h_t$ 的"短期"特性**：
 
+2. **隐藏状态 $h_t$ 的"短期"特性**：
    - **非线性变换**: $h_t = o_t \odot \tanh(c_t)$，经过tanh激活后再被输出门过滤
    - **每步更新**: $h_t$ 每个时刻都会被完全重新计算，反映当前时刻的即时状态
    - **对外接口**: $h_t$ 被用于当前时刻的预测和传递给下一时刻的输入，携带"当前最需要的信息"
-3. **对比普通RNN**：
 
+3. **对比普通RNN**：
    - 普通RNN: $h_t = \tanh(W_h h_{t-1} + W_x x_t)$，信息每步都经过非线性变换，容易**梯度消失**
    - LSTM: $c_t$ 提供了一条**跳过非线性变换的直通路径**，使得梯度可以流经数百个时间步而不衰减
 
@@ -139,59 +137,59 @@ flowchart TB
     input_h["h<sub>t-1</sub> (上一时刻隐藏状态)"]
     input_x["x<sub>t</sub> (当前输入)"]
     input_c["c<sub>t-1</sub> (上一时刻记忆)"]
-  
+
     %% 连接输入
     concat["[h<sub>t-1</sub>, x<sub>t</sub>]<br/>(拼接)"]
-  
+
     %% 四个门
     forget["遗忘门 (Forget Gate)<br/>f<sub>t</sub> = σ(W<sub>f</sub>·[h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>f</sub>)"]
     inputgate["输入门 (Input Gate)<br/>i<sub>t</sub> = σ(W<sub>i</sub>·[h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>i</sub>)"]
     contentgate["内容门 (Content Gate)<br/>c̃<sub>t</sub> = tanh(W<sub>c</sub>·[h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>c</sub>)"]
     outputgate["输出门 (Output Gate)<br/>o<sub>t</sub> = σ(W<sub>o</sub>·[h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>o</sub>)"]
-  
+
     %% 记忆更新
     multiply1["⊙<br/>(逐元素乘法)"]
     multiply2["⊙<br/>(逐元素乘法)"]
     add["c<sub>t</sub> = f<sub>t</sub> ⊙ c<sub>t-1</sub> + i<sub>t</sub> ⊙ c̃<sub>t</sub><br/>(记忆更新)"]
-  
+
     %% 输出计算
     tanh_c["tanh(c<sub>t</sub>)"]
     multiply3["⊙<br/>(逐元素乘法)"]
     output_h["h<sub>t</sub> = o<sub>t</sub> ⊙ tanh(c<sub>t</sub>)<br/>(输出隐藏状态)"]
     output_c["c<sub>t</sub><br/>(输出记忆)"]
-  
+
     %% 连接关系
     input_h --> concat
     input_x --> concat
-  
+
     concat --> forget
     concat --> inputgate
     concat --> contentgate
     concat --> outputgate
-  
+
     input_c --> multiply1
     forget --> multiply1
-  
+
     inputgate --> multiply2
     contentgate --> multiply2
-  
+
     multiply1 --> add
     multiply2 --> add
-  
+
     add --> tanh_c
     add --> output_c
-  
+
     tanh_c --> multiply3
     outputgate --> multiply3
-  
+
     multiply3 --> output_h
-  
+
     %% 样式
     classDef inputStyle fill:#e1f5ff,stroke:#333,stroke-width:2px
     classDef gateStyle fill:#fff4e1,stroke:#333,stroke-width:2px
     classDef operationStyle fill:#f0f0f0,stroke:#333,stroke-width:2px
     classDef outputStyle fill:#e1ffe1,stroke:#333,stroke-width:2px
-  
+
     class input_h,input_x,input_c inputStyle
     class forget,inputgate,contentgate,outputgate gateStyle
     class concat,multiply1,multiply2,multiply3,add,tanh_c operationStyle
@@ -204,7 +202,7 @@ flowchart TB
 
 这里的二维卷积就是CNN中的卷积操作，"二维"指的是**在二维空间(图像的高度和宽度方向)上进行卷积**。
 
-**标准2D卷积的完整形���**：对于输入图像 $X$ 和卷积核 $K$ (大小为 $k_h \times k_w$)，输出为：
+**标准2D卷积的完整形态**：对于输入图像 $X$ 和卷积核 $K$ (大小为 $k_h \times k_w$)，输出为：
 
 $$
 (K * X)_{i,j} = \sum_{m=0}^{k_h-1} \sum_{n=0}^{k_w-1} K_{m,n} \cdot X_{i-m, j-n}
@@ -470,8 +468,8 @@ $$
 
 卷积核：
 
-- state-to-state: 每个像素需要左侧和上方两个像素的state，skewing后在同一列，是一个简单的2*1卷积
-- input-to-state: 只需要一个像素，1*1卷积
+- state-to-state: 每个像素需要左侧和上方两个像素的state，skewing后在同一列，是一个简单的2\*1卷积
+- input-to-state: 只需要一个像素，1\*1卷积
 
 #### 3.3.3 双向处理与因果性
 
@@ -487,7 +485,7 @@ $$
 
 PixelRNN效果虽好，但由于RNN的序列性，训练时存在一个不得不逐层进行的for循环。随着图像增大，像素的感受野可以认为是无限的，但序列性的代价也越来越大。一个自然的性能提升思路就是对感受野进行截断，使用完全的**卷积架构**而非递归层，这就是PixelCNN。
 
-PixelCNN中每个像素获取“历史”像素的信息不再依赖基于LSTM隐藏状态的state-to-state卷积，而是基于原始像素值卷积层的堆叠（原文中用了15层）。对于3*3卷积，每次卷积能引入上方三个像素和左侧一个像素的信息，N层叠加后，就引入了最远N个像素外的信息。其感受野显然是小于PixelRNN的，评测指标也自然存在差距，在原文中仅仅简单介绍了一下。
+PixelCNN中每个像素获取“历史”像素的信息不再依赖基于LSTM隐藏状态的state-to-state卷积，而是基于原始像素值卷积层的堆叠（原文中用了15层）。对于3\*3卷积，每次卷积能引入上方三个像素和左侧一个像素的信息，N层叠加后，就引入了最远N个像素外的信息。其感受野显然是小于PixelRNN的，评测指标也自然存在差距，在原文中仅仅简单介绍了一下。
 
 #### 3.3.5 MultiScale PixelRNN
 
@@ -529,7 +527,7 @@ x_1,x_2,\cdots,x_{i-1} &\rightarrow x_i^{\mathrm{pred}} \\\\
 \end{aligned}
 $$
 
-- 这样得到的训练集是巨大的：对于一张1024*1024的图像，就有100多万个训练样本
+- 这样得到的训练集是巨大的：对于一张1024\*1024的图像，就有100多万个训练样本
 - 基于同一张图像的不同训练样本，在通过网络时有大量计算是重复的，这显然是不可接受的
 - 我们希望，一个训练样本就是一张图像，训练阶段能够直接输入整张图并计算Loss
 
@@ -548,31 +546,30 @@ $$
 
 我们将每个像素的特征平分为三部分，分别对应原始像素的RGB值。在此基础上定义两种 Mask：
 
-* **Mask A（严格因果掩码）：**
+- **Mask A（严格因果掩码）：**
+  - **应用场景**：仅应用于网络的第一层卷积层（即直接接触原始图像输入特征的层）。
+  - **空间与通道约束**：不仅限制卷积核只能连接到当前像素左侧和上方的已生成像素，更在当前像素位置（中心位置）实施**严格的通道截断**。具体而言，它仅允许连接到当前像素中“已经预测完毕”的颜色通道。
+  - **连通性规则**：
+    - 预测 **R 通道**时：中心位置权重全为 0（无法获取当前像素的任何真实颜色信息）。
+    - 预测 **G 通道**时：中心位置仅允许连接到 R 通道。
+    - 预测 **B 通道**时：中心位置仅允许连接到 R 和 G 通道。
+  - **核心目的**：绝对禁止特征通道在输入层与其自身建立连接（无 Self-connection），从物理层面杜绝网络直接“抄袭”原始输入中的目标像素值，防止信息泄露（Information Leakage）。
 
-  * **应用场景**：仅应用于网络的第一层卷积层（即直接接触原始图像输入特征的层）。
-  * **空间与通道约束**：不仅限制卷积核只能连接到当前像素左侧和上方的已生成像素，更在当前像素位置（中心位置）实施**严格的通道截断**。具体而言，它仅允许连接到当前像素中“已经预测完毕”的颜色通道。
-  * **连通性规则**：
-    * 预测 **R 通道**时：中心位置权重全为 0（无法获取当前像素的任何真实颜色信息）。
-    * 预测 **G 通道**时：中心位置仅允许连接到 R 通道。
-    * 预测 **B 通道**时：中心位置仅允许连接到 R 和 G 通道。
-  * **核心目的**：绝对禁止特征通道在输入层与其自身建立连接（无 Self-connection），从物理层面杜绝网络直接“抄袭”原始输入中的目标像素值，防止信息泄露（Information Leakage）。
-* **Mask B（放宽的上下文掩码）：**
+- **Mask B（放宽的上下文掩码）：**
+  - **应用场景**：应用于除第一层外的所有后续卷积层（包括 `input-to-state` 卷积层以及其他的纯卷积层，如 1x1卷积）。
+  - **规则放宽**：在完全保留 Mask A 空间因果约束和跨通道顺序 (RGB)的前提下，**允许颜色通道连接到其自身（Connection from a color to itself）**。
+  - **连通性规则**：
+    - 计算深层 **R 特征**时：除了左上方的历史信息，还允许连接上一层的 **R 特征**。
+    - 计算深层 **G 特征**时：允许连接上一层的 **R、G 特征**。
+    - 计算深层 **B 特征**时：允许连接上一层的 **R、G、B 特征**。
+  - **核心目的**：由于第一层的 Mask A 已经彻底隔离了真实的未预测像素值，深层特征中的通道数据仅代表合法的“历史上下文汇总”。因此，Mask B 允许同色通道间的自连接，以确保深层特征能够无损地向下传递并累积表达能力，而不会破坏全局的因果性。
 
-  * **应用场景**：应用于除第一层外的所有后续卷积层（包括 `input-to-state` 卷积层以及其他的纯卷���层，如 1x1卷积）。
-  * **规则放宽**：在完全保留 Mask A 空间因果约束和跨通道顺序 (RGB)的前提下，**允许颜色通道连接到其自身（Connection from a color to itself）**。
-  * **连通性规则**：
-    * 计算深层 **R 特征**时：除了左上方的历史信息，还允许连接上一层的 **R 特征**。
-    * 计算深层 **G 特征**时：允许连接上一层的 **R、G 特征**。
-    * 计算深层 **B 特征**时：允许连接上一层的 **R、G、B 特征**。
-  * **核心目的**：由于第一层的 Mask A 已经彻底隔离了真实的未预测像素值，深层特征中的通道数据仅代表合法的“历史上下文汇总”。因此，Mask B 允许同色通道间的自连接，以确保深层特征能够无损地向下传递并累积表达能力，而不会破坏全局的因果性。
-* 两种Mask的必要性：
-
-  * Mask A：保证生成的因果性，只能依赖历史像素和当前像素的历史通道
-  * Mask B：需要从两个角度考虑。如下图, $X_{R|G|B}$为原始像素相应通道的值, $H^i_{R|G|B}$为第i层相应通道的特征
-    * Mask的必要性（为什么 $H^2_R$不能看 $H_G^1$）。由于 $H_G^1$计算过程中是看过 $X_R$的，如果允许 $H^2_R$看 $H_G^1$，就会间接看到 $X_R$，从而破坏因果性。
+- 两种Mask的必要性：
+  - Mask A：保证生成的因果性，只能依赖历史像素和当前像素的历史通道
+  - Mask B：需要从两个角度考虑。如下图, $X_{R|G|B}$为原始像素相应通道的值, $H^i_{R|G|B}$为第i层相应通道的特征
+    - Mask的必要性（为什么 $H^2_R$不能看 $H_G^1$）。由于 $H_G^1$计算过程中是看过 $X_R$的，如果允许 $H^2_R$看 $H_G^1$，就会间接看到 $X_R$，从而破坏因果性。
       ![image.png](assets/pixelrnn5.png)
-    * 放开的必要性（为什么要允许 $H_R^2$看 $H_R^1$）：如果不允许，多层模型的深度就失去了意义，每一层都是在重新基于历史像素生成当前像素
+    - 放开的必要性（为什么要允许 $H_R^2$看 $H_R^1$）：如果不允许，多层模型的深度就失去了意义，每一层都是在重新基于历史像素生成当前像素
 
 #### 3.4.3 网络的整体结构
 
@@ -598,23 +595,23 @@ flowchart TD
     subgraph Residual_Block ["LSTM 残差模块 (重复 N 层)"]
         direction TB
         Input_Res("本层输入<br>2h x 1024 x 1024"):::data
-  
+
         I2S["Input-to-State<br>3x1 Conv (Mask B)"]:::conv
         S2S["State-to-State<br>3x1 Conv (No Mask)"]:::conv
-  
+
         Data_I2S("展开特征<br>4h x 1024 x 1024"):::data
         Data_S2S("历史特征<br>4h x 1024 x 1024"):::data
-  
+
         Add_Gates(("➕")):::op
-  
+
         LSTM_Core{"LSTM 核心门控<br>(i, f, o, g)"}:::lstm
-  
+
         Data_H("隐藏状态 h_i<br>h x 1024 x 1024"):::data
-  
+
         Conv1x1_Up["Upsample<br>1x1 Conv (Mask B)"]:::conv
-  
+
         Data_2H("扩维特征<br>2h x 1024 x 1024"):::data
-  
+
         Add_Res(("➕")):::op
         Output_Res("本层输出<br>2h x 1024 x 1024"):::data
     end
@@ -627,16 +624,16 @@ flowchart TD
 
     Input --> Conv7x7 --> Data_Initial
     Data_Initial ==> Input_Res
-  
+
     Input_Res --> I2S --> Data_I2S --> Add_Gates
     S2S -. "h_{i-1}" .-> Data_S2S --> Add_Gates
-  
+
     Add_Gates --> LSTM_Core
     LSTM_Core --> Data_H
     Data_H --> Conv1x1_Up --> Data_2H --> Add_Res
     Input_Res -->|残差连接| Add_Res
     Add_Res --> Output_Res
-  
+
     Output_Res ==> Post_Process
     Post_Process --> Final_Linear --> Logits
 ```
@@ -657,8 +654,8 @@ flowchart TD
 
 ### 4.2 相比Bengio 1999的进步
 
-| 方面               | Bengio 1999                   | PixelRNN 2016          |
-| ------------------ | ----------------------------- | ---------------------- |
+| 方面         | Bengio 1999                   | PixelRNN 2016          |
+| ------------ | ----------------------------- | ---------------------- |
 | **应用领域** | 一般离散数据(DNA, Mushroom等) | 自然图像               |
 | **架构**     | 全连接神经网络 + 隐藏层       | 二维LSTM / 卷积网络    |
 | **空间结构** | 无特殊处理                    | 显式建模二维空间依赖   |
