@@ -71,7 +71,7 @@ $$\tilde{W} = W \odot M, \quad M_{ij} = \begin{cases} 1 & \mathrm{if } (i < k/2)
 
 原始 PixelCNN 的每层输出经过 ReLU 激活: $y = \mathrm{ReLU}(W * x)$。本文将其替换为受 LSTM 门控机制启发的**门控激活单元**：
 
-$$y = \tanh(W_{k,f} * x) \odot \sigma(W_{k,g} * x)$$
+$$y = \tanh(W_{k,f} \ast x) \odot \sigma(W_{k,g} \ast x)$$
 
 其中：
 
@@ -111,7 +111,7 @@ $$y = \tanh(W_{k,f} * x) \odot \sigma(W_{k,g} * x)$$
 - 每层垂直栈的输出（经过1x1卷积变换后）**被叠加到同层水平栈的输入**（但水平栈的输出不反馈给垂直栈，以保持因果性）。这样：
 
 $$
-h^{(l)}_{\mathrm{horiz}} = f\!\left(W^{(l)}_{\mathrm{horiz}} * h^{(l-1)}_{\mathrm{horiz}} + V^{(l)} \cdot h^{(l)}_{\mathrm{vert}}\right)
+h^{(l)}_{\mathrm{horiz}} = f\!\left(W^{(l)}_{\mathrm{horiz}} \ast h^{(l-1)}_{\mathrm{horiz}} + V^{(l)} \cdot h^{(l)}_{\mathrm{vert}}\right)
 $$
 
 - 水平栈通过接收垂直栈的信息，间接获得了来自右上方区域的信息，从而**完全消除了盲点**。
@@ -140,7 +140,7 @@ $$h_{\mathrm{horiz}}^{(l)} = h_{\mathrm{horiz}}^{(l-1)} + W_{1 \times 1}^{\mathr
 **全局条件**（如 ImageNet 1000 类的 one-hot embedding）：
 
 $$
-y = \tanh(W_{k,f}* x + V_{k,f}^{\top} h)\odot\sigma(W_{k,g}* x + V_{k,g}^{\top}* h)
+y = \tanh(W_{k,f}\ast x + V_{k,f}^{\top} h)\odot\sigma(W_{k,g}\ast x + V_{k,g}^{\top}* h)
 $$
 
 条件向量 $h$ 通过**可学习的线性变换** $V_f, V_g$ 映射为与特征图匹配的向量，然后**在每一层、每个空间位置广播叠加**。这相当于给整张图像一个"全局偏置"，引导模型生成与条件对应的内容。
@@ -148,7 +148,7 @@ $$
 **局部条件**（如脸部特征嵌入后接 Deconv）：
 
 $$
-y = \tanh(W_{k,f}* x + V_{k,f}*\hat{s})\odot\sigma(W_{k,g}* x + V_{k,g}* \hat{s})
+y = \tanh(W_{k,f}\ast x + V_{k,f}\ast\hat{s})\odot\sigma(W_{k,g}\ast x + V_{k,g}\ast \hat{s})
 $$
 
 其中 $\hat{s}$ 是经过转置卷积上采样至图像分辨率的条件特征图, $V_f, V_g$ 是 1 x 1 无掩码卷积。
