@@ -48,7 +48,7 @@ $$p(x) = \prod_{i=1}^{n^2} p(x_i \mid x_1, \ldots, x_{i-1})$$
 
 对于 RGB 图像，每个像素有三个通道，进一步分解为：
 
-$$p(x_i \mid x_{<i}) = p(x_{i,R} \mid x_{<i}) \cdot p(x_{i,G} \mid x_{i,R}, x_{<i}) \cdot p(x_{i,B} \mid x_{i,R}, x_{i,G}, x_{<i})$$
+$$p(x_i \mid x_{\lt i}) = p(x_{i,R} \mid x_{\lt i}) \cdot p(x_{i,G} \mid x_{i,R}, x_{\lt i}) \cdot p(x_{i,B} \mid x_{i,R}, x_{i,G}, x_{\lt i})$$
 
 即红通道先生成，然后绿通道以红通道为条件，最后蓝通道以红和绿为条件。
 
@@ -65,11 +65,11 @@ $$p(x_i \mid x_{<i}) = p(x_{i,R} \mid x_{<i}) \cdot p(x_{i,G} \mid x_{i,R}, x_{<
 
 $$\tilde{W} = W \odot M, \quad M_{ij} = \begin{cases} 1 & \mathrm{if } (i < k/2) \mathrm{ or } (i = k/2 \mathrm{ and } j \leq k/2) \\ 0 & \mathrm{otherwise} \end{cases}$$
 
-其中 $k$ 为卷积核大小，$M_{ij}$ 中 $j \leq k/2$ 对应 Type B，$j < k/2$ 对应 Type A。
+其中 $k$ 为卷积核大小, $M_{ij}$ 中 $j \leq k/2$ 对应 Type B, $j < k/2$ 对应 Type A。
 
 ### 2.3 门控激活单元（Gated Activation Unit）
 
-原始 PixelCNN 的每层输出经过 ReLU 激活：$y = \mathrm{ReLU}(W * x)$。本文将其替换为受 LSTM 门控机制启发的**门控激活单元**：
+原始 PixelCNN 的每层输出经过 ReLU 激活: $y = \mathrm{ReLU}(W * x)$。本文将其替换为受 LSTM 门控机制启发的**门控激活单元**：
 
 $$y = \tanh(W_{k,f} * x) \odot \sigma(W_{k,g} * x)$$
 
@@ -140,7 +140,7 @@ $$h_{\mathrm{horiz}}^{(l)} = h_{\mathrm{horiz}}^{(l-1)} + W_{1 \times 1}^{\mathr
 **全局条件**（如 ImageNet 1000 类的 one-hot embedding）：
 
 $$
-y = \tanh(W_{k,f}* x + V_{k,f}^\top h)\odot\sigma(W_{k,g}* x + V_{k,g}^\top* h)
+y = \tanh(W_{k,f}* x + V_{k,f}^{\top} h)\odot\sigma(W_{k,g}* x + V_{k,g}^{\top}* h)
 $$
 
 条件向量 $h$ 通过**可学习的线性变换** $V_f, V_g$ 映射为与特征图匹配的向量，然后**在每一层、每个空间位置广播叠加**。这相当于给整张图像一个"全局偏置"，引导模型生成与条件对应的内容。
@@ -151,7 +151,7 @@ $$
 y = \tanh(W_{k,f}* x + V_{k,f}*\hat{s})\odot\sigma(W_{k,g}* x + V_{k,g}* \hat{s})
 $$
 
-其中 $\hat{s}$ 是经过转置卷积上采样至图像分辨率的条件特征图，$V_f, V_g$ 是 1 x 1 无掩码卷积。
+其中 $\hat{s}$ 是经过转置卷积上采样至图像分辨率的条件特征图, $V_f, V_g$ 是 1 x 1 无掩码卷积。
 
 一个条件是全局还是局部，是先验知识，按需使用上述两种计算方法。
 
