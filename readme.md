@@ -31,3 +31,4 @@ MIT 深度生成模型课程学习笔记，基于 genspark 生成的初版，通
 ## Assignments
 
 - [Assignment 1: VAE](pset1.ipynb)
+- [Assignment 2: PixelCNN](pset2.ipynb)
