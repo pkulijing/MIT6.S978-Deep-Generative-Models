@@ -259,7 +259,7 @@ $$
 
 $$
 \begin{aligned}
-[\mathbf{\mu_t, \sigma_t}] &\leftarrow \mathrm{AutoRegressiveNN}(\mathbf{z_{t-1}, h};\theta)\\
+\lbrack\mathbf{\mu_t, \sigma_t}\rbrack &\leftarrow \mathrm{AutoRegressiveNN}(\mathbf{z_{t-1}, h};\theta)\\
 \mathbf{z_t}&=\mathbf{\mu_t+\sigma_t\odot z_{t-1}}
 \end{aligned}
 $$
@@ -338,7 +338,7 @@ $$
 
 $$
 \begin{aligned}
-[\mathbf{m}_t, \mathbf{s}_t] &= \mathrm{AutoRegressiveNN}_t(\mathbf{z}_{t-1},\mathbf{h};\theta) \\
+\lbrack\mathbf{m}_t, \mathbf{s}_t\rbrack &= \mathrm{AutoRegressiveNN}_t(\mathbf{z}_{t-1},\mathbf{h};\theta) \\
 \sigma_t &= \mathrm{sigmoid}(\mathbf{s}_t) \\
 \mathbf{z}_t&=\sigma_t\odot \mathbf{z}_{t-1} + (1-\sigma_t)\cdot\mathbf{m}_t
 \end{aligned}
