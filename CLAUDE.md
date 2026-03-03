@@ -1,116 +1,26 @@
-# CLAUDE.md
+# Project: MIT 6.S978 Deep Generative Models
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## 内容
 
-## Repository Overview
+这是 [MIT 6.S978 Deep Generative Models](https://mit-6s978.github.io/schedule.html) 课程的学习笔记
 
-This is a learning repository for MIT 6.S978 Deep Generative Models (Fall 2024) course. It contains detailed course notes in markdown format and Jupyter notebook assignments implementing various generative models.
+## 目录结构
 
-The repository is primarily educational, containing:
-- Lecture notes with mathematical derivations and explanations (in Chinese with some English)
-- Reading notes summarizing research papers
-- Problem sets implemented as Jupyter notebooks
-- Supporting assets (images/diagrams)
+- assets: 保存图片
+- 根目录：保存笔记，包含三类内容：
+  - reading: 课程指定论文及相关论文的阅读笔记，markdown格式
+  - lecture: 课程讲义slides的阅读笔记，markdown格式
+  - assignment: 课程作业，jupyter notebook格式
 
-## Working with Notebooks
+## 技术栈
 
-### Running the Assignment Notebook
+- reading & lecture:
+  - 主体为 markdown
+  - 公式使用 MathJAX 支持的 latex
+  - 可以使用 mermaid 绘制简单流程图
+  - 复杂的图片直接在 markdown 中插入
+- assignment: 另行完成后复制过来，不需要在这个项目中修改
 
-The main assignment is [pset1.ipynb](pset1.ipynb), which implements AutoEncoders (AE), Variational AutoEncoders (VAE), and Point Cloud VAE for 3D torus data.
+## 课程内容
 
-To run the notebook:
-```bash
-jupyter lab pset1.ipynb
-# or
-jupyter notebook pset1.ipynb
-```
-
-### Dependencies
-
-The notebook requires:
-- PyTorch 2.x with CUDA support (tested with CUDA 12.8)
-- torchvision
-- matplotlib
-- numpy
-- tqdm
-- mpl_toolkits (for 3D visualization)
-
-The notebook automatically detects and uses CUDA if available. GPU training is used for the VAE models on MNIST dataset (60,000 samples).
-
-### Dataset
-
-The notebook automatically downloads the MNIST dataset to `./data/` directory on first run.
-
-## Code Architecture
-
-### Assignment 1 (pset1.ipynb) Structure
-
-The notebook is organized into sections with problem implementations:
-
-1. **Preliminary Functions (Section 0)**
-   - Data loading for MNIST with batch_size=256
-   - Generic training loop with progress tracking
-   - Evaluation functions for visualizing reconstructions and latent space
-
-2. **AutoEncoder (Section 1)**
-   - Class: `AE` - Basic encoder-decoder architecture
-   - Loss: MSE reconstruction loss
-   - Implements encoder/decoder with configurable hidden dimensions
-   - Final hidden dimension is always 2 for 2D latent space visualization
-
-3. **Variational AutoEncoder (Section 2)**
-   - Class: `VAE` - Encoder with reparameterization trick
-   - Methods:
-     - `encode()` - Returns mean and logvar
-     - `reparameterize()` - Samples z using reparameterization trick
-     - `decode()` - Generates reconstructions from latent code
-   - Two loss implementations:
-     - `loss_SGVB` - Monte Carlo estimate of ELBO
-     - `loss_KL_wo_E` - Analytical KL divergence (preferred)
-   - The notebook verifies both losses converge as sample count increases
-
-4. **Torus Point Cloud VAE (Section 3)**
-   - Class: `PointVAE` with `PositionalEncoding3D`
-   - Custom `PolarVAE` that outputs spherical coordinates (r, theta, phi) and converts to Cartesian
-   - Trains on 3D point cloud data sampled from torus surface
-   - Tests reconstruction and latent space interpolation
-
-### Key Implementation Details
-
-- Models use `torch.nn.Sequential` for encoder/decoder construction
-- Training uses Adam optimizer with typical learning rate 1e-3 to 1e-4
-- The generic `loss_func()` combines reconstruction loss with optional regularization term
-- VAE latent dimension must be even (split into mean and logvar)
-- All models support `.to(device)` for CUDA training
-
-## Documentation Structure
-
-### Lecture Notes
-
-- [lecture1-introduction.md](lecture1-introduction.md) - Overview of generative models, discriminative vs generative
-- [lecture2-vae.md](lecture2-vae.md) - Detailed VAE derivation with ELBO, EM algorithm connection
-- [lecture3-auto-regressive.md](lecture3-auto-regressive.md) - Autoregressive models
-
-### Reading Notes
-
-Paper summaries with mathematical derivations:
-- [reading1-image-priors.md](reading1-image-priors.md) - Image prior research
-- [reading1.1-vae-paper.md](reading1.1-vae-paper.md) - Original VAE paper analysis
-- [reading2.1-normalizing-flow.md](reading2.1-normalizing-flow.md) - Normalizing Flows (Rezende & Mohamed, 2015)
-- [reading2.2-glow.md](reading2.2-glow.md) - Glow model (Kingma & Dhariwal, 2018)
-- [reading2.3-i-resnet.md](reading2.3-i-resnet.md) - Invertible ResNets
-- [reading3.1-auto-regressive-bengio.md](reading3.1-auto-regressive-bengio.md) - Bengio's autoregressive work
-- [reading3.2-pixel-rnn.md](reading3.2-pixel-rnn.md) - Pixel Recurrent Neural Networks (PixelRNN/PixelCNN)
-
-## Common Patterns
-
-- Notes are written in Chinese with English technical terms and equations
-- Markdown files contain LaTeX math expressions for formulas
-- Code comments in notebooks are primarily in Chinese
-- Images referenced in markdown are stored in [assets/](assets/) directory
-
-## Documentation Conventions
-
-### Table of Contents
-
-All markdown notes should include a TOC (`## 目录`) placed immediately after the title (before any content). TOC depth should cover all heading levels present in the document, up to 4 levels (`####`). TOC anchor links follow GitHub Markdown conventions: lowercase, spaces replaced by hyphens, special characters and emojis stripped.
+@SCHEDULE.md

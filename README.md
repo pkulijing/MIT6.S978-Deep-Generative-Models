@@ -1,6 +1,6 @@
 # MIT 6.S978 Deep Generative Models
 
-MIT 深度生成模型课程学习笔记，基于 genspark 生成的初版，通过与 AI 对话及手动修改完成。
+MIT 深度生成模型课程学习笔记，基于 AI 生成初版，通过与 AI 对话及手动修改完成。
 
 ## Lectures
 
