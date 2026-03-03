@@ -31,6 +31,7 @@ MIT 深度生成模型课程学习笔记，基于 AI 生成初版，通过与 AI
 ### Auto Regressive & Tokenizers
 
 - [Reading 4.1 DALL-E](reading4.1-dall-e.md)
+- [Reading 4.2 MAGVIT](reading4.2-magvit-v2.md)
 
 ## Assignments
 
