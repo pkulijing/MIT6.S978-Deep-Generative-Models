@@ -50,7 +50,7 @@ $$
 
 其概率密度函数的图像如下：
 
-![Uploaded Image](https://www.genspark.ai/api/files/s/5kHzaOS6)
+![Gumbel Distribution](assets/dalle.png)
 
 正态分布用于对常规现象、平均行为建模，Gumbel分布则用于对极端现象建模。如一个水文观测站没每年测到的最高水位的分布、一个气温测量点测到的当年最低温，就符合Gumbel分布。
 
