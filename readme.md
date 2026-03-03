@@ -28,6 +28,10 @@ MIT 深度生成模型课程学习笔记，基于 genspark 生成的初版，通
 - [Reading 3.3: IAF](reading3.3-iaf.md)
 - [Reading 3.4: PixelCNN for Image Generation](reading3.4-pixel-cnn-image-gen.md) (For Assignment 2)
 
+### Auto Regressive & Tokenizers
+
+- [Reading 4.1 DALL-E](reading4.1-dall-e.md)
+
 ## Assignments
 
 - [Assignment 1: VAE](pset1.ipynb)
