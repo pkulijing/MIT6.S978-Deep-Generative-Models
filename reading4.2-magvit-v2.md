@@ -11,6 +11,9 @@
   - [3.1 核心观察：VQ 的词表扩展困境](#31-核心观察vq-的词表扩展困境)
   - [3.2 Lookup-Free Quantization (LFQ)](#32-lookup-free-quantization-lfq)
   - [3.3 Causal 3D CNN Tokenizer](#33-causal-3d-cnn-tokenizer)
+    - [3.3.1 视频 Tokenizer 的因果性要求](#331-视频-tokenizer-的因果性要求)
+    - [3.3.2 因果 3D 卷积](#332-因果-3d-卷积)
+    - [3.3.3 图像与视频的统一 Tokenization](#333-图像与视频的统一-tokenization)
   - [3.4 Token Factorization](#34-token-factorization)
   - [3.5 生成模型：MLM 与自回归](#35-生成模型mlm-与自回归)
 - [4. 总结](#4-总结)
@@ -45,7 +48,7 @@ VQ-VAE (van den Oord et al., 2017) 是视觉离散化的基础方法。其核心
 2. 对特征图中每个位置的向量 $z_i \in \mathbb{R}^d$，在 codebook $\mathcal{C} = \{e_k\}_{k=1}^{K} \subset \mathbb{R}^d$ 中查找最近邻：
 
 $$
-q(z_i) = e_{k^*}, \quad k^* = \arg\min_k \|z_i - e_k\|_2
+q(z_i) = e_{k^{\ast}}, \quad k^{\ast} = \arg\min_k \|z_i - e_k\|_2
 $$
 
 3. 将量化后的特征图喂给 Decoder 重建图像
@@ -100,7 +103,7 @@ $$
 
 LFQ 的核心思想是**消除 codebook 的 embedding 查找操作**，将其替换为逐维度的二值化。
 
-**编码方案**：将 codebook 从 $K$ 个 $d$ 维向量，替换为一个整数集合 $\mathcal{C} = \{0, 1, \ldots, K-1\}$，其中 $K = 2^n$，$n = \log_2 K$。特征向量 $z \in \mathbb{R}^n$ 的每个维度独立地被量化到 $\{-1, +1\}$：
+**编码方案**：将 codebook 从 $K$ 个 $d$ 维向量，替换为一个整数集合 $\mathcal{C} = \{0, 1, \ldots, K-1\}$，其中 $K = 2^n$, $n = \log_2 K$。特征向量 $z \in \mathbb{R}^n$ 的每个维度独立地被量化到 $\{-1, +1\}$：
 
 $$
 q(z_j) = \mathrm{sign}(z_j) = \begin{cases} +1 & z_j > 0 \\ -1 & z_j \leq 0 \end{cases}
@@ -114,7 +117,7 @@ $$
 
 这本质上是将 $n$ 位二进制数转为十进制——一个确定性的 $O(n)$ 操作，不需要在 $K$ 个 codebook entry 中查找最近邻（VQ 为 $O(Kd)$），因此称为 "Lookup-Free"。
 
-**为什么 LFQ 解决了 codebook collapse？** 在 LFQ 中，$K$ 个 token 完全由 $n$ 个独立的二值维度决定。只要每个维度的分布不退化，所有 $2^n$ 个 token 的使用概率就天然接近均匀。不存在 VQ 中因梯度消失而导致 entry 死亡的问题。
+**为什么 LFQ 解决了 codebook collapse？** 在 LFQ 中, $K$ 个 token 完全由 $n$ 个独立的二值维度决定。只要每个维度的分布不退化，所有 $2^n$ 个 token 的使用概率就天然接近均匀。不存在 VQ 中因梯度消失而导致 entry 死亡的问题。
 
 **训练目标**：LFQ 的主要训练困难在于 $\mathrm{sign}$ 函数的梯度为零。对此，用 straight-through estimator 近似梯度（即前向传播用量化值，反向传播将梯度直传给量化前的连续值）。
 
@@ -152,7 +155,7 @@ $$
 
 #### 3.3.3 图像与视频的统一 Tokenization
 
-时序下采样倍率 $s$ 采用特殊设计：将 $1 + s \times t$ 帧压缩为 $1 + t$ 帧。其中"$+1$"对应**第一帧单独处理**，不参与时序下采样。
+时序下采样倍率 $s$ 采用特殊设计：将 $1 + s \times t$ 帧压缩为 $1 + t$ 帧。其中 "+1"对应**第一帧单独处理**，不参与时序下采样。
 
 这样，单张图像（等价于 $t = 0$，即 1 帧视频）经过 tokenizer 后输出恰好 1 帧 token，与图像 tokenizer 的行为完全一致，从而实现图像与视频的**统一建模**。
 
