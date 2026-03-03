@@ -2,6 +2,27 @@
 
 **van den Oord, Kalchbrenner, Espeholt, Vinyals, Graves et al. (2016) | arXiv:1606.05328**
 
+- [1. 论文的动机](#1-论文的动机)
+  - [1.1 自回归图像生成的历史背景](#11-自回归图像生成的历史背景)
+  - [1.2 原始 PixelCNN 的核心缺陷](#12-原始-pixelcnn-的核心缺陷)
+    - [1.2.1 无法条件生成 (conditional generation)](#121-无法条件生成-conditional-generation)
+    - [1.2.2 感受野的"盲点"问题（Blind Spot）](#122-感受野的盲点问题blind-spot)
+    - [1.2.3 激活单元表达能力弱（Weak Activation）](#123-激活单元表达能力弱weak-activation)
+- [2. 论文的数学基础](#2-论文的数学基础)
+  - [2.1 自回归图像建模](#21-自回归图像建模)
+  - [2.2 掩码卷积（Masked Convolution）](#22-掩码卷积masked-convolution)
+  - [2.3 门控激活单元（Gated Activation Unit）](#23-门控激活单元gated-activation-unit)
+- [3. 论文的主要逻辑](#3-论文的主要逻辑)
+  - [3.1 消除盲点：双栈卷积架构](#31-消除盲点双栈卷积架构)
+  - [3.2 门控 PixelCNN 的完整计算流程](#32-门控-pixelcnn-的完整计算流程)
+  - [3.3 Conditional PixelCNN 的条件注入机制](#33-conditional-pixelcnn-的条件注入机制)
+  - [3.4 PixelCNN 作为自编码器解码器](#34-pixelcnn-作为自编码器解码器)
+- [4. 总结](#4-总结)
+  - [4.1 与动机的呼应](#41-与动机的呼应)
+  - [4.2 局限性与后续影响](#42-局限性与后续影响)
+
+---
+
 ## 1. 论文的动机
 
 ### 1.1 自回归图像生成的历史背景
@@ -22,7 +43,7 @@ $$p(x) = \prod_{i=1}^{n^2} p(x_i \mid x_1, x_2, \ldots, x_{i-1})$$
 
 本文引入**条件向量 $h$**，使模型能够根据类别标签、潜在嵌入或空间特征图来控制生成内容，实现多样化的条件图像生成。
 
-#### 1.2.2 感受野的"盲点"问题（Blind Spot
+#### 1.2.2 感受野的"盲点"问题（Blind Spot）
 
 ![alt text](assets/pixelcnn2.png)
 
@@ -30,7 +51,7 @@ $$p(x) = \prod_{i=1}^{n^2} p(x_i \mid x_1, x_2, \ldots, x_{i-1})$$
 
 本文提出 **双栈结构（Dual-Stack Architecture）**，通过水平栈与垂直栈的分离设计，从根本上消除盲点问题。
 
-#### 1.2.3：激活单元表达能力弱（Weak Activation
+#### 1.2.3 激活单元表达能力弱（Weak Activation）
 
 原始 PixelCNN 使用标准的 ReLU 激活函数，而在 PixelRNN 中，LSTM 的**乘法门控单元（multiplicative gating）** 被认为是其强表达能力的关键。两者激活函数的不对等，部分解释了 PixelCNN 性能落后的原因。
 
